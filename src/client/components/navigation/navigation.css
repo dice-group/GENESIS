@@ -1,0 +1,12 @@
+:global(.navbar-collapse).searchHolder {
+    display: flex !important;
+    flex-direction: row;
+}
+
+.searchFlex {
+    flex: 1;
+}
+
+.searchInput {
+    width: 100% !important;
+}

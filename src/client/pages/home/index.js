@@ -4,8 +4,10 @@ const Home = React.createClass({
     render() {
         return (
             <div className="row">
-                <div className="col-xs-6 col-xs-offset-3">
-                    <h3>LDB stuff here</h3>
+                <div className="col-xs-8 col-xs-offset-2">
+                    <div className="row text-center">
+                        <h3>Welcome to Linked Data Browser!</h3>
+                    </div>
                 </div>
             </div>
         );

@@ -25,7 +25,11 @@ module.exports = {
         loaders: [
             {
                 test: /\.css$/,
-                loaders: ['style', 'css'],
+                loaders: ['style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'],
+            },
+            {
+                test: /\.less$/,
+                loaders: ['style', 'css', 'less'],
             },
             {
                 test: /\.jsx?$/,

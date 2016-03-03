@@ -2,8 +2,8 @@ import React from 'react';
 import {render} from 'react-dom';
 import {Router, Route, browserHistory} from 'react-router';
 
-// styles
-import 'bootstrap/dist/css/bootstrap.min.css';
+// global styles
+import './styles.less';
 
 // app wrapper
 import App from './app';
