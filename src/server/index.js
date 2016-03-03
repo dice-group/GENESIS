@@ -1,22 +1,19 @@
 import {join} from 'path';
 // express
 import express from 'express';
-// requests handling
-import bodyParser from 'body-parser';
-import methodOverride from 'method-override';
 // logging
 import morgan from 'morgan';
-import logger from './logger';
+import createLogger from './logger';
 // webpack for dev
 import setupWebpack from './webpack';
+// api
+import setupAPI from './api';
+
+// logger
+const logger = createLogger('server');
 
 // init app
 const app = express();
-// parse request bodies (req.body)
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-// support _method (PUT in forms etc)
-app.use(methodOverride());
 // logging
 app.use(morgan('combined', {stream: logger.stream}));
 // error handling inside of express
@@ -34,6 +31,9 @@ app.use(express.static(join(__dirname, '..', 'client')));
 app.get('/', function response(req, res) {
     res.sendFile(join(__dirname, '..', 'client', 'index.html'));
 });
+
+// setup API
+setupAPI(app);
 
 // start server
 const server = app.listen(8080, () => {

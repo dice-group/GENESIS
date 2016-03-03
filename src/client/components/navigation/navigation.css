@@ -1,6 +1,6 @@
 :global(.navbar-collapse).searchHolder {
     display: flex !important;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 .searchFlex {
@@ -9,4 +9,11 @@
 
 .searchInput {
     width: 100% !important;
+}
+
+.typeahead {
+    display: block;
+    left: auto;
+    position: absolute;
+    min-width: 300px;
 }
