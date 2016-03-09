@@ -5,7 +5,7 @@ import defaultState from './defaultstate';
 import get$, {getSuggestions} from './get';
 
 // create result store stream
-const typeahead = new ReplaySubject(1)
+const search$ = new ReplaySubject(1)
 // plug in actions
 .merge(get$)
 // default state
@@ -14,4 +14,4 @@ const typeahead = new ReplaySubject(1)
 .scan((state, data) => state.merge(data));
 
 export {getSuggestions};
-export default typeahead;
+export default search$;

@@ -1,3 +1,3 @@
 require('babel-core/register');
 require('./src/index');
-require('./src/services/typeahead');
+require('./src/services/search');

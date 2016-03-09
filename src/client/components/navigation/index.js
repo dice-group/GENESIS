@@ -2,18 +2,18 @@ import {fromJS} from 'immutable';
 import React from 'react';
 import {Link} from 'react-router';
 import styles from './navigation.css';
-import typeahead$, {getSuggestions} from '../../stores/typeahead';
+import search$, {getSuggestions} from '../../stores/search';
 
 const Navigation = React.createClass({
     getInitialState() {
-        return {typeahead: fromJS({})};
+        return {search: fromJS({})};
     },
 
     componentWillMount() {
-        this.typeaheadSub = typeahead$.subscribe(typeahead => this.setState({typeahead}));
+        this.searchSub = search$.subscribe(search => this.setState({search}));
     },
     componentWillUnmount() {
-        this.typeaheadSub.dispose();
+        this.searchSub.dispose();
     },
 
     render() {
@@ -31,15 +31,6 @@ const Navigation = React.createClass({
                                 onKeyUp={e => getSuggestions(e.target.value)} />
                         </div>
                     </form>
-                    {this.state.typeahead.get('typeahead').count() ? (
-                    <div className={`dropdown-menu ${styles.typeahead}`}>
-                        {this.state.typeahead.get('typeahead').map(it => (
-                            <li key={it}>
-                                <a onClick={() => {}}>{it}</a>
-                            </li>
-                        ))}
-                    </div>
-                    ) : ''}
                 </div>
             </nav>
         );

@@ -1,1 +1,1 @@
-export const typeaheadAPI = '/api/typeahead';
+export const searchAPI = '/api/search';

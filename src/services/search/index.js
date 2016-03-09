@@ -6,9 +6,12 @@ import methodOverride from 'method-override';
 // logging
 import morgan from 'morgan';
 import createLogger from '../../server/logger';
+// faker for fake data generation
+// TODO: replace with real data
+import faker from 'faker';
 
 // logger
-const logger = createLogger('typeahead');
+const logger = createLogger('search');
 
 // init app
 const app = express();
@@ -28,23 +31,22 @@ app.use((err, req, res, next) => { // eslint-disable-line
 // serve index page
 app.post('/', (req, res) => {
     const q = req.body.q || '';
-    console.log(req, q);
-    const data = [
-        'test',
-        'other',
-        'resource 1',
-        'Something else',
-        'Timetravel',
-        'Outter space',
-        'Rolling star',
-    ];
+    const data = [];
+    for (let i = 0; i < 100; i++) {
+        data.push({
+            title: faker.lorem.sentence(),
+            description: faker.lorem.paragraph(),
+            image: faker.image.imageUrl(),
+            url: faker.internet.url(),
+        });
+    }
 
-    res.send(data.filter(s => s.toLowerCase().includes(q.toLowerCase())));
+    res.send(data.filter(s => s.title.toLowerCase().includes(q.toLowerCase())));
 });
 
 // start server
 const server = app.listen(8081, () => {
     const host = server.address().address;
     const port = server.address().port;
-    logger.info(`LDB-typeahead listening at http://${host}:${port}`);
+    logger.info(`LDB-search listening at http://${host}:${port}`);
 });

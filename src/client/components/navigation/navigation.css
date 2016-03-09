@@ -10,10 +10,3 @@
 .searchInput {
     width: 100% !important;
 }
-
-.typeahead {
-    display: block;
-    left: auto;
-    position: absolute;
-    min-width: 300px;
-}
