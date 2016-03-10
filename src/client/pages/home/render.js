@@ -10,26 +10,30 @@ const renderHello = () => (
     </div>
 );
 
-const renderSearch = (state) => state.search.get('results').map(it => (
-    <div className={`row ${styles.paddedRow}`} key={it.get('url')}>
-        <div className="col-xs-2">
-            <img className="img-responsive" src={it.get('image')} />
+const renderSearch = function() {
+    return this.state.search.get('results').map(it => (
+        <div className={`row ${styles.paddedRow}`} key={it.get('url')}>
+            <div className="col-xs-2">
+                <img className="img-responsive" src={it.get('image')} />
+            </div>
+            <div className="col-xs-10">
+                <h4>{it.get('title')}</h4>
+                <p>{it.get('description')}</p>
+                <a href="#" onClick={this.showResource.bind(this, it)}>Show full details</a>
+            </div>
         </div>
-        <div className="col-xs-10">
-            <h4>{it.get('title')}</h4>
-            <p>{it.get('description')}</p>
-            <a onClick={() => console.log(it.toJS())}>Show full details</a>
-        </div>
-    </div>
-));
+    ));
+};
 
-const chooseRender = (state) => state.search.get('results').count() ? renderSearch(state) : renderHello();
+const chooseRender = function() {
+    return this.state.search.get('results').count() ? renderSearch.call(this) : renderHello();
+};
 
 export default function render() {
     return (
         <div className="row">
             <div className="col-xs-8 col-xs-offset-2">
-                {chooseRender(this.state)}
+                {chooseRender.call(this)}
             </div>
         </div>
     );
