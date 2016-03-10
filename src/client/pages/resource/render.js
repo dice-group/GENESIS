@@ -7,7 +7,9 @@ export default function render() {
             <div className="col-xs-8 col-xs-offset-2">
                 Resource page for {this.props.params.url}
                 <br />
-                State: {this.state.description}
+                <pre>
+                {JSON.stringify(this.state, null, 4)}
+                </pre>
             </div>
         </div>
     );
