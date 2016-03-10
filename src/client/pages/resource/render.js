@@ -6,6 +6,8 @@ export default function render() {
         <div className="row">
             <div className="col-xs-8 col-xs-offset-2">
                 Resource page for {this.props.params.url}
+                <br />
+                State: {this.state.description}
             </div>
         </div>
     );
