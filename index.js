@@ -6,3 +6,4 @@ require('./src/services/disambiguation');
 require('./src/services/images');
 require('./src/services/videos');
 require('./src/services/similar');
+require('./src/services/related');
