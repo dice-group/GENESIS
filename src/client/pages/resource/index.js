@@ -3,6 +3,7 @@ import render from './render';
 import description$, {getDescription} from '../../stores/description';
 import disambiguation$, {getDisambiguation} from '../../stores/disambiguation';
 import images$, {getImages} from '../../stores/images';
+import videos$, {getVideos} from '../../stores/videos';
 
 const Resource = React.createClass({
     getInitialState() {
@@ -10,6 +11,7 @@ const Resource = React.createClass({
             description: '',
             disambiguation: '',
             images: [],
+            videos: [],
         };
     },
 
@@ -21,10 +23,14 @@ const Resource = React.createClass({
             disambiguation$
                 .map(v => v.get('disambiguation'))
                 .do(disambiguation => getImages(disambiguation))
+                .do(disambiguation => getVideos(disambiguation))
                 .subscribe(disambiguation => this.setState({disambiguation})),
             images$
                 .map(v => v.get('images'))
                 .subscribe(images => this.setState({images})),
+            videos$
+                .map(v => v.get('videos'))
+                .subscribe(videos => this.setState({videos})),
         ];
     },
     componentWillUnmount() {
