@@ -4,6 +4,7 @@ import description$, {getDescription} from '../../stores/description';
 import disambiguation$, {getDisambiguation} from '../../stores/disambiguation';
 import images$, {getImages} from '../../stores/images';
 import videos$, {getVideos} from '../../stores/videos';
+import similarEntities$, {getSimilarEntities} from '../../stores/similar';
 
 const Resource = React.createClass({
     getInitialState() {
@@ -20,6 +21,9 @@ const Resource = React.createClass({
             description$
                 .map(v => v.get('description'))
                 .subscribe(description => this.setState({description})),
+            similarEntities$
+                .map(v => v.get('similarEntities'))
+                .subscribe(similarEntities => this.setState({similarEntities})),
             disambiguation$
                 .map(v => v.get('disambiguation'))
                 .do(disambiguation => getImages(disambiguation))
@@ -39,6 +43,7 @@ const Resource = React.createClass({
     componentDidMount() {
         const {url} = this.props.params;
         getDescription(url);
+        getSimilarEntities(url);
         getDisambiguation(url);
     },
 

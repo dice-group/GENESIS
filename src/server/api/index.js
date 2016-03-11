@@ -5,6 +5,7 @@ const descriptionProxy = httpProxy.createProxyServer({target: 'http://localhost:
 const disambiguationProxy = httpProxy.createProxyServer({target: 'http://localhost:8083', ignorePath: true});
 const imagesProxy = httpProxy.createProxyServer({target: 'http://localhost:8084', ignorePath: true});
 const videosProxy = httpProxy.createProxyServer({target: 'http://localhost:8085', ignorePath: true});
+const similarProxy = httpProxy.createProxyServer({target: 'http://localhost:8086', ignorePath: true});
 
 export default (app) => {
     app.post('/api/search', (req, res) => searchProxy.web(req, res));
@@ -12,4 +13,5 @@ export default (app) => {
     app.post('/api/disambiguation', (req, res) => disambiguationProxy.web(req, res));
     app.post('/api/images', (req, res) => imagesProxy.web(req, res));
     app.post('/api/videos', (req, res) => videosProxy.web(req, res));
+    app.post('/api/similar', (req, res) => similarProxy.web(req, res));
 };
