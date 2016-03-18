@@ -6,9 +6,10 @@ import methodOverride from 'method-override';
 // logging
 import morgan from 'morgan';
 import createLogger from '../../server/logger';
-// faker for fake data generation
-// TODO: replace with real data
-import faker from 'faker';
+// http requests
+import fetchival from 'fetchival';
+import fetch from 'node-fetch';
+fetchival.fetch = fetch;
 
 // logger
 const logger = createLogger('search');
@@ -30,18 +31,19 @@ app.use((err, req, res, next) => { // eslint-disable-line
 
 // serve index page
 app.post('/', (req, res) => {
-    const q = req.body.q || '';
-    const data = [];
-    for (let i = 0; i < 100; i++) {
-        data.push({
-            title: faker.lorem.sentence(),
-            description: faker.lorem.paragraph(),
-            image: faker.image.imageUrl(),
-            url: faker.internet.url(),
-        });
+    const q = encodeURIComponent(req.body.q || '');
+    if (q.length < 2) {
+        res.send([]);
+        return;
     }
 
-    res.send(data.filter(s => s.title.toLowerCase().includes(q.toLowerCase())));
+    fetchival('http://localhost:8181/search')
+    .get({q})
+    .then(json => json.map(it => ({
+        url: it.uri,
+        title: it.label,
+    })))
+    .then(json => res.send(json));
 });
 
 // start server

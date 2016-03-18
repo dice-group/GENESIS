@@ -1,5 +1,7 @@
 require('babel-core/register');
+// start main
 require('./src/index');
+// start services
 require('./src/services/search');
 require('./src/services/description');
 require('./src/services/disambiguation');

@@ -4,12 +4,14 @@ import defaultState from './defaultstate';
 // actions
 import get$, {getSuggestions} from './get';
 
+// store subject
+const subj = new ReplaySubject(1);
+
+// plug actions
+get$.subscribe(subj);
+
 // create result store stream
-const search$ = new ReplaySubject(1)
-// plug in actions
-.merge(get$)
-// default state
-.startWith(defaultState)
+const search$ = subj.startWith(defaultState)
 // combine results
 .scan((state, data) => state.merge(data));
 

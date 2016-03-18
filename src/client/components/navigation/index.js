@@ -25,10 +25,12 @@ const Navigation = React.createClass({
                 <div className={`collapse navbar-collapse ${styles.searchHolder}`}>
                     <form className={`navbar-form navbar-left ${styles.searchFlex}`}>
                         <div className={`form-group ${styles.searchInput}`}>
-                            <input type="text"
+                            <input
+                                type="text"
                                 placeholder="Search"
                                 className={`form-control ${styles.searchInput}`}
-                                onKeyUp={e => getSuggestions(e.target.value)} />
+                                onKeyPress={getSuggestions}
+                            />
                         </div>
                     </form>
                 </div>
