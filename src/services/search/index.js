@@ -6,10 +6,14 @@ import methodOverride from 'method-override';
 // logging
 import morgan from 'morgan';
 import createLogger from '../../server/logger';
+// config
+import {sparqlEndpoint, defaultGraphUri} from '../../../config';
 // http requests
 import fetchival from 'fetchival';
 import fetch from 'node-fetch';
 fetchival.fetch = fetch;
+// json-rdf parser
+import jsonRdfParser from '../../util/rdf-json-parser';
 
 // logger
 const logger = createLogger('search');
@@ -29,6 +33,15 @@ app.use((err, req, res, next) => { // eslint-disable-line
     res.status(500).send('Something broke!');
 });
 
+const jsonToQuery = (json) => `select distinct ?url ?description ?image where {
+    ?url <http://dbpedia.org/ontology/abstract> ?description .
+    OPTIONAL {
+        ?url <http://dbpedia.org/ontology/thumbnail> ?image .
+    }
+    FILTER(langMatches(lang(?description), "EN"))
+    FILTER(?url IN (${json.map(it => `<${it.url}>`).join(',')}))
+} LIMIT ${json.length * 2}`;
+
 // serve index page
 app.post('/', (req, res) => {
     const q = encodeURIComponent(req.body.q || '');
@@ -43,7 +56,23 @@ app.post('/', (req, res) => {
         url: it.uri,
         title: it.label,
     })))
-    .then(json => res.send(json));
+    .then(json => fetchival(sparqlEndpoint)
+        .get({
+            'default-graph-uri': defaultGraphUri,
+            query: jsonToQuery(json),
+        })
+        .then(body => jsonRdfParser(body))
+        .then(data => json.map(j => {
+            const ex = data.filter(d => d.url.value === j.url)[0];
+            return {
+                ...j,
+                description: ex.description.value,
+                image: ex.image ? ex.image.value : 'http://placehold.it/350x150',
+            };
+        }))
+    )
+    .then(json => res.send(json))
+    .catch(e => console.error(e));
 });
 
 // start server
