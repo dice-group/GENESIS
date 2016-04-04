@@ -6,9 +6,8 @@ import methodOverride from 'method-override';
 // logging
 import morgan from 'morgan';
 import createLogger from '../../server/logger';
-// faker for fake data generation
-// TODO: replace with real data
-import faker from 'faker';
+// youtube search
+import youtubeSearch from './youtube';
 
 // logger
 const logger = createLogger('videos');
@@ -29,18 +28,17 @@ app.use((err, req, res, next) => { // eslint-disable-line
 });
 
 // serve index page
-app.post('/', (req, res) => {
+app.post('/', (req, res, next) => {
     const {q} = req.body;
+    if (q.length < 2) {
+        res.send({videos: []});
+        return;
+    }
+
     logger.debug('getting videos for:', q);
-    res.send({
-        videos: [
-            faker.image.imageUrl(),
-            faker.image.imageUrl(),
-            faker.image.imageUrl(),
-            faker.image.imageUrl(),
-            faker.image.imageUrl(),
-        ],
-    });
+    youtubeSearch(q)
+    .then(videos => res.send({videos}))
+    .catch(next);
 });
 
 // start server

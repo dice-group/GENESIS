@@ -33,6 +33,7 @@
     "body-parser": "^1.15.0",
     "bootstrap": "^3.3.6",
     "bootswatch": "^3.3.6",
+    "cheerio": "^0.20.0",
     "express": "^4.13.4",
     "faker": "^3.0.1",
     "fetchival": "^0.3.1",
