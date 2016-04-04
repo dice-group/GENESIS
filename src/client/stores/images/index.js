@@ -5,11 +5,13 @@ import defaultState from './defaultstate';
 import get$, {getImages} from './get';
 
 // create result store stream
-const images$ = new ReplaySubject(1)
+const subj = new ReplaySubject(1);
+
 // plug in actions
-.merge(get$)
+get$.subscribe(subj);
+
 // default state
-.startWith(defaultState)
+const images$ = subj.startWith(defaultState)
 // combine results
 .scan((state, data) => state.merge(data));
 

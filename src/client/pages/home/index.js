@@ -19,8 +19,12 @@ const Home = React.createClass({
     showResource(it, e) {
         e.preventDefault();
         const item = it.toJS();
-        const {url} = item;
-        browserHistory.push(`/resource/${encodeURIComponent(url)}`);
+        const {url, title} = item;
+        browserHistory.push({
+            pathname: '/resource',
+            search: `?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`,
+            state: item,
+        });
     },
 
     render,

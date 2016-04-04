@@ -10,6 +10,8 @@ import relatedEntities$, {getRelatedEntities} from '../../stores/related';
 const Resource = React.createClass({
     getInitialState() {
         return {
+            url: '',
+            title: '',
             description: '',
             disambiguation: '',
             images: [],
@@ -30,8 +32,11 @@ const Resource = React.createClass({
                 .subscribe(relatedEntities => this.setState({relatedEntities})),
             disambiguation$
                 .map(v => v.get('disambiguation'))
-                .do(disambiguation => getImages(disambiguation))
-                .do(disambiguation => getVideos(disambiguation))
+                .filter(d => d.size > 2)
+                .distinctUntilChanged()
+                .do(d => console.log('disambiguation loaded', d.toJS()))
+                .do(d => this.loadImages(d))
+                .do(d => this.loadVideos(d))
                 .subscribe(disambiguation => this.setState({disambiguation})),
             images$
                 .map(v => v.get('images'))
@@ -42,7 +47,10 @@ const Resource = React.createClass({
         ];
     },
     componentDidMount() {
-        const {url} = this.props.params;
+        const {url, title} = this.props.location.state || this.props.location.query;
+        // store data for latter usage
+        this.setState({url, title}); // eslint-disable-line
+        // trigger fetching
         getDescription(url);
         getSimilarEntities(url);
         getRelatedEntities(url);
@@ -50,6 +58,13 @@ const Resource = React.createClass({
     },
     componentWillUnmount() {
         this.subs.map(s => s.dispose());
+    },
+
+    loadImages(disambiguation) {
+        getImages(`${this.state.title} ${disambiguation.get(0)}`);
+    },
+    loadVideos(disambiguation) {
+        getVideos(`${this.state.title} ${disambiguation.get(0)}`);
     },
 
     render,
