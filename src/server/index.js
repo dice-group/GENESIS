@@ -28,7 +28,7 @@ setupWebpack(app);
 // serve static content
 app.use(express.static(join(__dirname, '..', 'client')));
 // serve index page
-app.get('/', (_, res) => res.sendFile(join(__dirname, '..', 'client', 'index.html')));
+app.get('*', (_, res) => res.sendFile(join(__dirname, '..', 'client', 'index.html')));
 
 // setup API
 setupAPI(app);

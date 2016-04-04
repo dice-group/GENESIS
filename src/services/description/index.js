@@ -6,9 +6,14 @@ import methodOverride from 'method-override';
 // logging
 import morgan from 'morgan';
 import createLogger from '../../server/logger';
-// faker for fake data generation
-// TODO: replace with real data
-import faker from 'faker';
+// config
+import {sparqlEndpoint, defaultGraphUri} from '../../../config';
+// http requests
+import fetchival from 'fetchival';
+import fetch from 'node-fetch';
+fetchival.fetch = fetch;
+// json-rdf parser
+import jsonRdfParser from '../../util/rdf-json-parser';
 
 // logger
 const logger = createLogger('description');
@@ -28,11 +33,29 @@ app.use((err, req, res, next) => { // eslint-disable-line
     res.status(500).send('Something broke!');
 });
 
+const urlToQuery = (url) => `select ?description where {
+    <${url}> <http://dbpedia.org/ontology/abstract> ?description .
+    FILTER(langMatches(lang(?description), "EN"))
+} LIMIT 1`;
+
 // serve index page
 app.post('/', (req, res) => {
     const url = req.body.url;
+    if (url.length < 2) {
+        res.send([]);
+        return;
+    }
+
     logger.debug('generating description for:', url);
-    res.send({description: faker.lorem.paragraphs()});
+
+    fetchival(sparqlEndpoint)
+    .get({
+        'default-graph-uri': defaultGraphUri,
+        query: urlToQuery(url),
+    })
+    .then(body => jsonRdfParser(body))
+    .then(body => body.map(it => it.description.value).pop())
+    .then(description => res.send({description}));
 });
 
 // start server

@@ -3,13 +3,17 @@ import defaultState from './defaultstate';
 
 // actions
 import get$, {getDescription} from './get';
+import status$ from './status';
 
 // create result store stream
-const description$ = new ReplaySubject(1)
+const subj = new ReplaySubject(1);
+
 // plug in actions
-.merge(get$)
-// default state
-.startWith(defaultState)
+get$.subscribe(subj);
+status$.subscribe(subj);
+
+// init stream
+const description$ = subj.startWith(defaultState)
 // combine results
 .scan((state, data) => state.merge(data));
 
