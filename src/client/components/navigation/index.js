@@ -29,7 +29,7 @@ const Navigation = React.createClass({
                                 type="text"
                                 placeholder="Search"
                                 className={`form-control ${styles.searchInput}`}
-                                onKeyPress={getSuggestions}
+                                onKeyUp={getSuggestions}
                             />
                         </div>
                     </form>

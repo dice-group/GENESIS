@@ -25,7 +25,15 @@ module.exports = {
         loaders: [
             {
                 test: /\.css$/,
-                loaders: ['style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'],
+                exclude: /node_modules/,
+                loaders: [
+                    'style',
+                    'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+                ],
+            },
+            {
+                test: /node_modules\/.+\.css$/,
+                loaders: ['style', 'css'],
             },
             {
                 test: /\.less$/,
@@ -39,10 +47,10 @@ module.exports = {
                     presets: ['es2015', 'react', 'stage-1'],
                     env: {
                         development: {
-                            presets: ['react-hmre']
-                        }
-                    }
-                }
+                            presets: ['react-hmre'],
+                        },
+                    },
+                },
             },
             {
                 test: /\.json$/,
@@ -70,8 +78,8 @@ module.exports = {
             },
             {
                 test: /\.gif$/,
-                loader: 'url?limit=10000&mimetype=image/gif'
-            }
+                loader: 'url?limit=10000&mimetype=image/gif',
+            },
         ],
-    }
+    },
 };

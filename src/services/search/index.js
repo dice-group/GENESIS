@@ -64,12 +64,17 @@ app.post('/', (req, res) => {
         .then(body => jsonRdfParser(body))
         .then(data => json.map(j => {
             const ex = data.filter(d => d.url.value === j.url)[0];
+            if (!ex) {
+                return undefined;
+            }
             return {
                 ...j,
                 description: ex.description.value,
                 image: ex.image ? ex.image.value : 'http://placehold.it/350x150',
             };
-        }))
+        })
+        // filter empty
+        .filter(x => x !== undefined))
     )
     .then(json => res.send(json))
     .catch(e => console.error(e));

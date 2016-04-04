@@ -20,7 +20,7 @@ const Home = React.createClass({
         e.preventDefault();
         const item = it.toJS();
         const {url} = item;
-        browserHistory.push('/resource/' + encodeURIComponent(url));
+        browserHistory.push(`/resource/${encodeURIComponent(url)}`);
     },
 
     render,

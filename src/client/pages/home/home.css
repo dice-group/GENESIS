@@ -1,3 +1,13 @@
 .paddedRow {
     padding-bottom: 30px;
 }
+
+.centerContent {
+    display: flex;
+    justify-content: center;
+}
+
+.centerContent :global(.cube-grid) {
+    width: 60px;
+    height: 60px;
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import Spinner from 'react-spinkit';
 import styles from './home.css';
 
 const renderHello = () => (
@@ -26,6 +27,14 @@ const renderSearch = function() {
 };
 
 const chooseRender = function() {
+    if (this.state.search.get('status') === 'loading') {
+        return (
+            <div className={`row ${styles.centerContent}`}>
+                <Spinner spinnerName="cube-grid" noFadeIn />
+            </div>
+        );
+    }
+
     return this.state.search.get('results').count() ? renderSearch.call(this) : renderHello();
 };
 
