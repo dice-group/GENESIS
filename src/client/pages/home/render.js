@@ -5,7 +5,7 @@ import styles from './home.css';
 const renderHello = () => (
     <div className="row text-center">
         <h3>
-            Welcome to Linked Data Browser!<br/>
+            Welcome to Linked Data Browser!<br />
             <small>Try searching for something</small>
         </h3>
     </div>
@@ -20,7 +20,7 @@ const renderSearch = function() {
             <div className="col-xs-10">
                 <h4>{it.get('title')}</h4>
                 <p>{it.get('description')}</p>
-                <a href="#" onClick={this.showResource.bind(this, it)}>Show full details</a>
+                <a href="#" onClick={(e) => this.showResource(it, e)}>Show full details</a>
             </div>
         </div>
     ));

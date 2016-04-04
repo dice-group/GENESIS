@@ -41,15 +41,15 @@ const Resource = React.createClass({
                 .subscribe(videos => this.setState({videos})),
         ];
     },
-    componentWillUnmount() {
-        this.subs.map(s => s.dispose());
-    },
     componentDidMount() {
         const {url} = this.props.params;
         getDescription(url);
         getSimilarEntities(url);
         getRelatedEntities(url);
         getDisambiguation(url);
+    },
+    componentWillUnmount() {
+        this.subs.map(s => s.dispose());
     },
 
     render,

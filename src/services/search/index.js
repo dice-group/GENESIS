@@ -77,7 +77,7 @@ app.post('/', (req, res) => {
         .filter(x => x !== undefined))
     )
     .then(json => res.send(json))
-    .catch(e => console.error(e));
+    .catch(e => logger.error(e));
 });
 
 // start server

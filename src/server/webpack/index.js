@@ -6,7 +6,7 @@ import config from '../../../webpack.config.js';
 // define node_env
 config.plugins = [
     new webpack.DefinePlugin({
-        'process.env': {NODE_ENV: JSON.stringify(process.env.NODE_ENV)}
+        'process.env': {NODE_ENV: JSON.stringify(process.env.NODE_ENV)},
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
