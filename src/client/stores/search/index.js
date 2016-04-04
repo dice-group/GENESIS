@@ -3,7 +3,7 @@ import defaultState from './defaultstate';
 
 // actions
 import get$, {getSuggestions} from './get';
-import status$, {setStatus} from './status';
+import status$ from './status';
 
 // store subject
 const subj = new ReplaySubject(1);
@@ -17,5 +17,5 @@ const search$ = subj.startWith(defaultState)
 // combine results
 .scan((state, data) => state.merge(data));
 
-export {getSuggestions, setStatus};
+export {getSuggestions};
 export default search$;

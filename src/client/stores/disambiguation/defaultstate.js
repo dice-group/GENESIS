@@ -1,7 +1,7 @@
 import {fromJS} from 'immutable';
 
 const searchState = fromJS({
-    disambiguation: '',
+    disambiguation: [],
     status: 'init',
 });
 
