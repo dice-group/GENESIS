@@ -6,9 +6,8 @@ import methodOverride from 'method-override';
 // logging
 import morgan from 'morgan';
 import createLogger from '../../server/logger';
-// faker for fake data generation
-// TODO: replace with real data
-import faker from 'faker';
+// use google image search api
+import imageSearch from 'g-i-s';
 
 // logger
 const logger = createLogger('images');
@@ -31,15 +30,19 @@ app.use((err, req, res, next) => { // eslint-disable-line
 // serve index page
 app.post('/', (req, res) => {
     const {q} = req.body;
+    if (q.length < 2) {
+        res.send({images: []});
+        return;
+    }
+
     logger.debug('getting images for:', q);
-    res.send({
-        images: [
-            faker.image.imageUrl(),
-            faker.image.imageUrl(),
-            faker.image.imageUrl(),
-            faker.image.imageUrl(),
-            faker.image.imageUrl(),
-        ],
+
+    imageSearch(q, (err, images) => {
+        if (err) {
+            throw err;
+        }
+
+        res.send({images});
     });
 });
 

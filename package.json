@@ -36,6 +36,7 @@
     "express": "^4.13.4",
     "faker": "^3.0.1",
     "fetchival": "^0.3.1",
+    "g-i-s": "^1.0.1",
     "http-proxy": "^1.13.2",
     "immutable": "^3.7.6",
     "method-override": "^2.3.5",
