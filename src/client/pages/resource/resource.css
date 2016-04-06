@@ -1,3 +1,17 @@
 .paddedRow {
     padding-bottom: 30px;
 }
+
+.btnLink {
+    margin-left: 10px;
+}
+
+.imageGrid {
+    max-height: 100px;
+    margin: 10px;
+}
+
+.mediaPanel {
+    max-height: 500px;
+    overflow: auto;
+}

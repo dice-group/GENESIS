@@ -14,6 +14,9 @@ import fetch from 'node-fetch';
 fetchival.fetch = fetch;
 // json-rdf parser
 import jsonRdfParser from '../../util/rdf-json-parser';
+// lodash
+import _ from 'lodash/fp';
+const capitalize = _.compose(_.join(' '), _.map(_.capitalize), _.words);
 
 // logger
 const logger = createLogger('search');
@@ -54,7 +57,7 @@ app.post('/', (req, res) => {
     .get({q})
     .then(json => json.map(it => ({
         url: it.uri,
-        title: it.label,
+        title: capitalize(it.label),
     })))
     .then(json => fetchival(sparqlEndpoint)
         .get({

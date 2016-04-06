@@ -14,7 +14,7 @@ export default (search_query) => fetchival(youtubeBaseUrl, {responseAs: 'text'})
         .from($('.yt-lockup-dismissable'))
         .map(it => ({
             title: $('.yt-lockup-title a', it).text(),
-            image: $('.yt-thumb-simple img', it).attr('src'),
+            image: `//i.ytimg.com/vi/${$('li[data-video-ids]', it).attr('data-video-ids')}/mqdefault.jpg`,
             url: $('.yt-lockup-title a', it).attr('href'),
             duration: $('.video-time', it).text(),
             description: $('.yt-lockup-description', it).text(),
