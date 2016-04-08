@@ -1,7 +1,7 @@
 {
-  "name": "linkeddatabrowser",
+  "name": "ginseng",
   "version": "0.1.0",
-  "description": "LinkedDataBrowser",
+  "description": "Ginseng",
   "main": "index.js",
   "scripts": {
     "start": "nodemon --ignore ./src/client index.js"

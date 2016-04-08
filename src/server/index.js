@@ -37,5 +37,5 @@ setupAPI(app);
 const server = app.listen(8080, () => {
     const host = server.address().address;
     const port = server.address().port;
-    logger.info(`LinkedDataBrowser listening at http://${host}:${port}`);
+    logger.info(`Ginseng listening at http://${host}:${port}`);
 });

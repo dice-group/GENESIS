@@ -5,7 +5,7 @@ import styles from './home.css';
 const renderHello = () => (
     <div className="row text-center">
         <h3>
-            Welcome to Linked Data Browser!<br />
+            Welcome to Ginseng!<br />
             <small>Try searching for something</small>
         </h3>
     </div>
