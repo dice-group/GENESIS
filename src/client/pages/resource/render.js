@@ -20,10 +20,6 @@ export default function render() {
                         <Videos {...this.state} />
                     </div>
                 </div>
-
-                <pre>
-                {JSON.stringify(this.state, null, 4)}
-                </pre>
             </div>
         </div>
     );
