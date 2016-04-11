@@ -14,5 +14,6 @@
 
 1. Start all third party services:
   a. Start Lucene search with `make lucene`
+  b. Start AVATAR summarisation with `make avatar`
 2. Start Ginseng by running `make main` (or `npm start`)
 3. Navigate to [http://localhost:8080](http://localhost:8080) in your browser

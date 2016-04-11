@@ -2,6 +2,7 @@ import React from 'react';
 import render from './render';
 import description$, {getDescription} from '../../stores/description';
 import disambiguation$, {getDisambiguation} from '../../stores/disambiguation';
+import summary$, {getSummary} from '../../stores/summary';
 import images$, {getImages} from '../../stores/images';
 import videos$, {getVideos} from '../../stores/videos';
 import similarEntities$, {getSimilarEntities} from '../../stores/similar';
@@ -30,6 +31,10 @@ const Resource = React.createClass({
             relatedEntities$
                 .map(v => v.get('relatedEntities'))
                 .subscribe(relatedEntities => this.setState({relatedEntities})),
+            summary$
+                .do(v => console.log(v.toJS()))
+                .map(v => v.get('summary'))
+                .subscribe(summary => this.setState({summary})),
             disambiguation$
                 .map(v => v.get('disambiguation'))
                 .filter(d => d.size > 2)
@@ -52,6 +57,7 @@ const Resource = React.createClass({
         this.setState({url, title}); // eslint-disable-line
         // trigger fetching
         getDescription(url);
+        getSummary(url);
         getSimilarEntities(url);
         getRelatedEntities(url);
         getDisambiguation(url);

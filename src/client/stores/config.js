@@ -6,3 +6,4 @@ export const videosAPI = '/api/videos';
 export const similarAPI = '/api/similar';
 export const relatedAPI = '/api/related';
 export const typeaheadAPI = '/api/typeahead';
+export const summaryAPI = '/api/summary';

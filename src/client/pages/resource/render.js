@@ -2,6 +2,7 @@ import React from 'react';
 
 import Title from './title';
 import Description from './description';
+import Summary from './summary';
 import Images from './images';
 import Videos from './videos';
 
@@ -11,6 +12,7 @@ export default function render() {
             <div className="col-xs-8 col-xs-offset-2">
                 <Title {...this.state} />
                 <Description {...this.state} />
+                <Summary {...this.state} />
 
                 <div className="row">
                     <div className="col-xs-6">

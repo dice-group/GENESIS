@@ -10,3 +10,4 @@ require('./src/services/videos');
 require('./src/services/similar');
 require('./src/services/related');
 require('./src/services/typeahead');
+require('./src/services/summary');
