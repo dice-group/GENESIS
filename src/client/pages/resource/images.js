@@ -8,7 +8,7 @@ export default ({images}) => (
         </div>
         <div className={`panel-body row ${styles.mediaPanel}`}>
             {images.map(img => (
-                <a href={img}>
+                <a href={img} key={img}>
                     <img src={img}
                         className={`img-responsive img-thumbnail ${styles.imageGrid}`}
                     />

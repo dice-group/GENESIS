@@ -7,6 +7,7 @@ const imagesProxy = httpProxy.createProxyServer({target: 'http://localhost:8084'
 const videosProxy = httpProxy.createProxyServer({target: 'http://localhost:8085', ignorePath: true});
 const similarProxy = httpProxy.createProxyServer({target: 'http://localhost:8086', ignorePath: true});
 const relatedProxy = httpProxy.createProxyServer({target: 'http://localhost:8087', ignorePath: true});
+const typeaheadProxy = httpProxy.createProxyServer({target: 'http://localhost:8088', ignorePath: true});
 
 export default (app) => {
     app.post('/api/search', (req, res) => searchProxy.web(req, res));
@@ -16,4 +17,5 @@ export default (app) => {
     app.post('/api/videos', (req, res) => videosProxy.web(req, res));
     app.post('/api/similar', (req, res) => similarProxy.web(req, res));
     app.post('/api/related', (req, res) => relatedProxy.web(req, res));
+    app.post('/api/typeahead', (req, res) => typeaheadProxy.web(req, res));
 };

@@ -8,7 +8,7 @@ export default ({videos}) => (
         </div>
         <div className={`panel-body ${styles.mediaPanel}`}>
             {videos.map(v => (
-                <div className="col-xs-6 text-center">
+                <div className="col-xs-6 text-center" key={v.get('url')}>
                     <a href={`http://youtube.com${v.get('url')}`}>
                         <img src={v.get('image')}
                             className="img-responsive img-rounded"
