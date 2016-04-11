@@ -47,5 +47,5 @@ app.post('/', (req, res) => {
 const server = app.listen(8087, () => {
     const host = server.address().address;
     const port = server.address().port;
-    logger.info(`LDB-relatedEntities listening at http://${host}:${port}`);
+    logger.info(`Ginseng-relatedEntities listening at http://${host}:${port}`);
 });

@@ -87,5 +87,5 @@ app.post('/', (req, res) => {
 const server = app.listen(8081, () => {
     const host = server.address().address;
     const port = server.address().port;
-    logger.info(`LDB-search listening at http://${host}:${port}`);
+    logger.info(`Ginseng-search listening at http://${host}:${port}`);
 });

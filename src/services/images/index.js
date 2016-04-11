@@ -50,5 +50,5 @@ app.post('/', (req, res) => {
 const server = app.listen(8084, () => {
     const host = server.address().address;
     const port = server.address().port;
-    logger.info(`LDB-images listening at http://${host}:${port}`);
+    logger.info(`Ginseng-images listening at http://${host}:${port}`);
 });

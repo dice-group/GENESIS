@@ -52,7 +52,7 @@ const Navigation = React.createClass({
         return (
             <nav className="navbar navbar-inverse">
                 <div className="navbar-header">
-                    <Link to="/" className="navbar-brand">LDB</Link>
+                    <Link to="/" className="navbar-brand">Ginseng</Link>
                 </div>
                 <div className={`collapse navbar-collapse ${styles.searchHolder}`}>
                     <div className={`navbar-form navbar-left ${styles.searchFlex}`}>

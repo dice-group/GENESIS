@@ -54,5 +54,5 @@ app.post('/', (req, res) => {
 const server = app.listen(8088, () => {
     const host = server.address().address;
     const port = server.address().port;
-    logger.info(`LDB-typeahead listening at http://${host}:${port}`);
+    logger.info(`Ginseng-typeahead listening at http://${host}:${port}`);
 });
