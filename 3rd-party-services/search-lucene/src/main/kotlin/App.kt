@@ -65,7 +65,7 @@ fun search(index: NIOFSDirectory, queryString: String, limit: Int = 10): Array<D
 
 fun main(args: Array<String>) {
     val index = indexFromFolder("./index")
-    val gson = Gson();
+    val gson = Gson()
     port(8181)
     get("/search", { req, res ->
         val q: String = req.queryParams("q")

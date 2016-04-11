@@ -2,3 +2,4 @@ node_modules
 target
 .idea
 3rd-party-services/search-lucene/index
+cache
