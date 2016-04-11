@@ -35,7 +35,6 @@ fun queryFromString(queryString: String): BooleanQuery {
     words.map { it.trim() }
     .filter { !it.isEmpty() && it != "*" }
     .forEach{
-        println(it)
         phraseQuery.add(Term("label", it))
         val parse = PrefixQuery(Term("label", it))
         parse.setBoost(0.9f)
