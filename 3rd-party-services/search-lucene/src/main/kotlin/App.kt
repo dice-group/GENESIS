@@ -1,5 +1,6 @@
 import java.io.File
 import java.util.HashMap
+import java.net.URLDecoder
 import org.apache.lucene.util.Version
 import org.apache.lucene.store.NIOFSDirectory
 import org.apache.lucene.document.Document
@@ -30,10 +31,11 @@ fun readerFromIndex(dir: NIOFSDirectory): DirectoryReader {
 fun queryFromString(queryString: String): BooleanQuery {
     val query = BooleanQuery()
     val phraseQuery = PhraseQuery()
-    val words = queryString.toLowerCase().split("\\s")
+    val words = URLDecoder.decode(queryString, "UTF-8").toLowerCase().split(" ")
     words.map { it.trim() }
     .filter { !it.isEmpty() && it != "*" }
     .forEach{
+        println(it)
         phraseQuery.add(Term("label", it))
         val parse = PrefixQuery(Term("label", it))
         parse.setBoost(0.9f)
