@@ -23,7 +23,7 @@ const Navigation = React.createClass({
                     <Link to="/" className="navbar-brand">LDB</Link>
                 </div>
                 <div className={`collapse navbar-collapse ${styles.searchHolder}`}>
-                    <form className={`navbar-form navbar-left ${styles.searchFlex}`}>
+                    <div className={`navbar-form navbar-left ${styles.searchFlex}`}>
                         <div className={`form-group ${styles.searchInput}`}>
                             <input
                                 type="text"
@@ -32,7 +32,7 @@ const Navigation = React.createClass({
                                 onKeyUp={getSuggestions}
                             />
                         </div>
-                    </form>
+                    </div>
                 </div>
             </nav>
         );
