@@ -11,3 +11,4 @@ require('./src/services/similar');
 require('./src/services/related');
 require('./src/services/typeahead');
 require('./src/services/summary');
+require('./src/services/location');

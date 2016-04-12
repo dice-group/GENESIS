@@ -10,7 +10,7 @@ const getSuggestions = createAction();
 
 const stream = getSuggestions.$
     .map(e => e.target.value)
-    .filter(q => q.length > 1)
+    .filter(q => q.length > 3)
     .debounce(300)
     .distinctUntilChanged()
     .do(() => setStatus('loading'))

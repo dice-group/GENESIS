@@ -3,6 +3,7 @@ import render from './render';
 import description$, {getDescription} from '../../stores/description';
 import disambiguation$, {getDisambiguation} from '../../stores/disambiguation';
 import summary$, {getSummary} from '../../stores/summary';
+import location$, {getLocation} from '../../stores/location';
 import images$, {getImages} from '../../stores/images';
 import videos$, {getVideos} from '../../stores/videos';
 import similarEntities$, {getSimilarEntities} from '../../stores/similar';
@@ -15,6 +16,7 @@ const Resource = React.createClass({
             title: '',
             description: '',
             disambiguation: '',
+            summary: '',
             images: [],
             videos: [],
         };
@@ -32,14 +34,15 @@ const Resource = React.createClass({
                 .map(v => v.get('relatedEntities'))
                 .subscribe(relatedEntities => this.setState({relatedEntities})),
             summary$
-                .do(v => console.log(v.toJS()))
                 .map(v => v.get('summary'))
                 .subscribe(summary => this.setState({summary})),
+            location$
+                .map(v => v.get('location'))
+                .subscribe(location => this.setState({location})),
             disambiguation$
                 .map(v => v.get('disambiguation'))
                 .filter(d => d.size > 2)
                 .distinctUntilChanged()
-                .do(d => console.log('disambiguation loaded', d.toJS()))
                 .do(d => this.loadImages(d))
                 .do(d => this.loadVideos(d))
                 .subscribe(disambiguation => this.setState({disambiguation})),
@@ -58,6 +61,7 @@ const Resource = React.createClass({
         // trigger fetching
         getDescription(url);
         getSummary(url);
+        getLocation(url);
         getSimilarEntities(url);
         getRelatedEntities(url);
         getDisambiguation(url);

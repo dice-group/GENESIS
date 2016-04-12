@@ -2,18 +2,18 @@ import fetchival from 'fetchival';
 import {Observable} from 'rx';
 import {fromJS} from 'immutable';
 import {createAction} from '../util';
-import {summaryAPI} from '../config';
+import {locationAPI} from '../config';
 import {setStatus} from './status';
 const {fromPromise} = Observable;
 
-const getSummary = createAction();
+const getLocation = createAction();
 
-const stream = getSummary.$
+const stream = getLocation.$
     .filter(url => url.length > 1)
     .do(() => setStatus('loading'))
-    .flatMap(url => fromPromise(fetchival(summaryAPI).post({url})))
-    .map(({summary}) => fromJS({summary}))
+    .flatMap(url => fromPromise(fetchival(locationAPI).post({url})))
+    .map(res => fromJS(res))
     .do(() => setStatus('done'));
 
-export {getSummary};
+export {getLocation};
 export default stream;

@@ -15,7 +15,7 @@ const Navigation = React.createClass({
     },
 
     componentWillMount() {
-        this.searchSub = typeahead$.subscribe(typeahead => this.setState({typeahead}));
+        this.searchSub = typeahead$.subscribe(typeahead => this.setState({typeahead, showTypeahead: true}));
     },
     componentWillUnmount() {
         this.searchSub.dispose();
@@ -35,7 +35,6 @@ const Navigation = React.createClass({
         }
 
         getTypeahead(e);
-        this.setState({showTypeahead: true});
     },
 
     handleResource(item) {
