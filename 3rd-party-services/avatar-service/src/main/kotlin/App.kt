@@ -9,7 +9,7 @@ fun main(args: Array<String>) {
     // set up the SPARQL endpoint, in our case it's DBpedia
     var endpoint = SparqlEndpoint.getEndpointDBpedia()
     // create the verbalizer used to generate the textual summarization
-    var verbalizer = Verbalizer(endpoint, "cache", null)
+    var verbalizer = Verbalizer(endpoint)
     // init service
     port(8182)
     get("/", { req, res ->

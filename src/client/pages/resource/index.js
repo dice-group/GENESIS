@@ -26,18 +26,22 @@ const Resource = React.createClass({
         this.subs = [
             description$
                 .map(v => v.get('description'))
+                .distinctUntilChanged()
                 .subscribe(description => this.setState({description})),
             similarEntities$
                 .map(v => v.get('similarEntities'))
+                .distinctUntilChanged()
                 .subscribe(similarEntities => this.setState({similarEntities})),
             relatedEntities$
                 .map(v => v.get('relatedEntities'))
+                .distinctUntilChanged()
                 .subscribe(relatedEntities => this.setState({relatedEntities})),
             summary$
-                .map(v => v.get('summary'))
+                .distinctUntilChanged()
                 .subscribe(summary => this.setState({summary})),
             location$
                 .map(v => v.get('location'))
+                .distinctUntilChanged()
                 .subscribe(location => this.setState({location})),
             disambiguation$
                 .map(v => v.get('disambiguation'))
@@ -48,9 +52,11 @@ const Resource = React.createClass({
                 .subscribe(disambiguation => this.setState({disambiguation})),
             images$
                 .map(v => v.get('images'))
+                .distinctUntilChanged()
                 .subscribe(images => this.setState({images})),
             videos$
                 .map(v => v.get('videos'))
+                .distinctUntilChanged()
                 .subscribe(videos => this.setState({videos})),
         ];
     },

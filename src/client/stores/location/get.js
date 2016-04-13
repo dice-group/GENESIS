@@ -11,7 +11,10 @@ const getLocation = createAction();
 const stream = getLocation.$
     .filter(url => url.length > 1)
     .do(() => setStatus('loading'))
-    .flatMap(url => fromPromise(fetchival(locationAPI).post({url})))
+    .flatMap(url =>
+        fromPromise(fetchival(locationAPI).post({url}))
+        .catch(() => Observable.return({}))
+    )
     .map(res => fromJS(res))
     .do(() => setStatus('done'));
 

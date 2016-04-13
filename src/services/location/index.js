@@ -14,6 +14,8 @@ import fetch from 'node-fetch';
 fetchival.fetch = fetch;
 // json-rdf parser
 import jsonRdfParser from '../../util/rdf-json-parser';
+// promise timeout
+import timeout from '../../util/timeout';
 
 // logger
 const logger = createLogger('location');
@@ -47,11 +49,11 @@ app.post('/', (req, res) => {
 
     logger.debug('generating location for:', url);
 
-    fetchival(sparqlEndpoint)
+    timeout(3000, fetchival(sparqlEndpoint)
     .get({
         'default-graph-uri': defaultGraphUri,
         query: urlToQuery(url),
-    })
+    }))
     .then(body => jsonRdfParser(body))
     .then(body => body.map(it => it.location.value).pop())
     .then(location => {
@@ -61,7 +63,8 @@ app.post('/', (req, res) => {
             lon: coords[1],
         };
     })
-    .then(location => res.send({location}));
+    .then(location => res.send({location}))
+    .catch(error => res.status(500).json({error}));
 });
 
 // start server

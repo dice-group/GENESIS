@@ -11,7 +11,10 @@ const getSummary = createAction();
 const stream = getSummary.$
     .filter(url => url.length > 1)
     .do(() => setStatus('loading'))
-    .flatMap(url => fromPromise(fetchival(summaryAPI).post({url})))
+    .flatMap(url =>
+        fromPromise(fetchival(summaryAPI).post({url}))
+        .catch(() => Observable.return({}))
+    )
     .map(({summary}) => fromJS({summary}))
     .do(() => setStatus('done'));
 

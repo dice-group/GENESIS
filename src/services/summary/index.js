@@ -10,6 +10,8 @@ import createLogger from '../../server/logger';
 import fetchival from 'fetchival';
 import fetch from 'node-fetch';
 fetchival.fetch = fetch;
+// promise timeout
+import timeout from '../../util/timeout';
 
 // logger
 const logger = createLogger('summary');
@@ -30,7 +32,7 @@ app.use((err, req, res, next) => { // eslint-disable-line
 });
 
 // serve index page
-app.post('/', (req, res) => {
+app.post('/', (req, res, next) => {
     const url = req.body.url;
     if (url.length < 2) {
         res.send({summary: ''});
@@ -39,9 +41,9 @@ app.post('/', (req, res) => {
 
     logger.debug('generating summary for:', url);
 
-    fetchival('http://localhost:8182', {responseAs: 'text'})
-    .get({url})
-    .then(summary => res.send({summary}));
+    timeout(3000, fetchival('http://localhost:8182', {responseAs: 'text'}).get({url}))
+    .then(summary => res.send({summary}))
+    .catch(error => res.status(500).json({error}));
 });
 
 // start server
