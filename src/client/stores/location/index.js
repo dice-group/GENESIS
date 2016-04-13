@@ -4,6 +4,7 @@ import defaultState from './defaultstate';
 // actions
 import get$, {getLocation} from './get';
 import status$ from './status';
+import clear$, {clearLocation} from './clear';
 
 // create result store stream
 const subj = new ReplaySubject(1);
@@ -11,11 +12,12 @@ const subj = new ReplaySubject(1);
 // plug in actions
 get$.subscribe(subj);
 status$.subscribe(subj);
+clear$.subscribe(subj);
 
 // init stream
 const location$ = subj.startWith(defaultState)
 // combine results
 .scan((state, data) => state.merge(data));
 
-export {getLocation};
+export {getLocation, clearLocation};
 export default location$;

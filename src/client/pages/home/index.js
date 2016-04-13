@@ -2,6 +2,7 @@ import {fromJS} from 'immutable';
 import {browserHistory} from 'react-router';
 import React from 'react';
 import search$ from '../../stores/search';
+import clearAll from '../../stores/util/clearAll';
 import render from './render';
 
 const Home = React.createClass({
@@ -20,6 +21,7 @@ const Home = React.createClass({
         e.preventDefault();
         const item = it.toJS();
         const {url, title} = item;
+        clearAll();
         browserHistory.push({
             pathname: '/resource',
             search: `?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`,
