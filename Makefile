@@ -4,5 +4,8 @@ lucene:
 avatar:
 	cd ./3rd-party-services/avatar-service/ && make start
 
+similarity:
+	cd ./3rd-party-services/similarity-service/ && make start
+
 main:
 	npm start
