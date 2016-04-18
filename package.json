@@ -1,13 +1,14 @@
 {
   "name": "ginseng",
   "version": "0.1.0",
-  "description": "Ginseng",
+  "description": "Ginseng - Generic Semantic Search Interface",
   "main": "index.js",
   "scripts": {
     "start": "nodemon --ignore ./src/client index.js"
   },
   "author": "Tim Ermilov <yamalight@gmail.com> (http://codezen.net)",
-  "license": "ISC",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "private": true,
   "devDependencies": {
     "babel-core": "^6.7.6",
     "babel-loader": "^6.2.4",
