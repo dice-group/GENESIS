@@ -4,6 +4,7 @@
 
 The simplest way to get Ginseng running is to use Docker.
 Here's how to do that:
+
 1. Make sure you have latest docker and docker-compose installed.
 2. Clone this repo
 3. Execute `docker-compose up`
