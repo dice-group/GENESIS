@@ -2,6 +2,9 @@ import React from 'react';
 import L from 'leaflet';
 import Spinner from 'react-spinkit';
 
+// set lefalet image path
+L.Icon.Default.imagePath = 'http://cdn.leafletjs.com/leaflet/v0.7.7/images';
+
 const Map = React.createClass({
     getInitialState() {
         return {
@@ -36,7 +39,9 @@ const Map = React.createClass({
         // set position
         this.map.setView(this.state.position, 13);
         // marker. do we need it?
-        // this.marker = L.marker(this.position).addTo(this.map);
+        this.marker = L.marker(this.state.position).addTo(this.map);
+        // .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+        // .openPopup();
     },
 
     render() {
