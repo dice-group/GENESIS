@@ -62,7 +62,7 @@ const Resource = React.createClass({
                 .subscribe(videos => this.setState({videos})),
             fox$
                 .map(v => v.get('annotations'))
-                .subscribe(annotations => this.setState({annotations}))
+                .subscribe(annotations => this.setState({annotations})),
         ];
     },
     componentDidMount() {
