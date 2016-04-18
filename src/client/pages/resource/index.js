@@ -31,7 +31,6 @@ const Resource = React.createClass({
                 .do(description => getAnnotations(description))
                 .subscribe(description => this.setState({description})),
             similarEntities$
-                .map(v => v.get('similarEntities'))
                 .subscribe(similarEntities => this.setState({similarEntities})),
             relatedEntities$
                 .subscribe(relatedEntities => this.setState({relatedEntities})),

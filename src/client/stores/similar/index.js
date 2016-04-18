@@ -3,13 +3,17 @@ import defaultState from './defaultstate';
 
 // actions
 import get$, {getSimilarEntities} from './get';
+import status$ from './status';
 
 // create result store stream
-const similarEntities$ = new ReplaySubject(1)
+const subj = new ReplaySubject(1);
+
 // plug in actions
-.merge(get$)
+get$.subscribe(subj);
+status$.subscribe(subj);
+
 // default state
-.startWith(defaultState)
+const similarEntities$ = subj.startWith(defaultState)
 // combine results
 .scan((state, data) => state.merge(data));
 
