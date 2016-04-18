@@ -33,6 +33,9 @@ app.use(express.static(join(__dirname, '..', 'client')));
 // serve index page
 app.get('*', (_, res) => res.sendFile(join(__dirname, '..', 'client', 'index.html')));
 
+// catch uncaught errors
+process.on('uncaughtException', (err) => logger.error('Uncaught exception:', err}));
+
 // start server
 const server = app.listen(8080, () => {
     const host = server.address().address;
