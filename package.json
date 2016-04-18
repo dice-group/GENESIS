@@ -38,6 +38,7 @@
     "faker": "^3.0.1",
     "fetchival": "^0.3.1",
     "g-i-s": "^1.0.3",
+    "hint.css": "^2.2.1",
     "http-proxy": "^1.13.2",
     "immutable": "^3.7.6",
     "leaflet": "^0.7.7",

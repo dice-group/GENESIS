@@ -9,14 +9,15 @@ export default ({description, annotations}) => (
         <div className="panel-body">
             {annotations.toJS().reduce((desc, ann) =>
                 // reduce annotations to array of text items
-                ann.beginIndex.reduce((d, index, i) => {
+                ann.beginIndex.reduce((d, index) => {
                     // get start and nex index of annotations
                     const startIndex = parseInt(index, 10);
-                    const endIndex = parseInt(ann.endIndex[i], 10);
+                    const endIndex = parseInt(ann.endIndex
+                        .find(e => (startIndex + ann.name.length) === parseInt(e, 10)), 10);
                     // calculate which item from array contains annotation
                     const itemIndex = d.findIndex((el, idx) => {
-                        const start = d.slice(0, idx).reduce((len, it) => len + it.size, 0);
-                        const end = start + el.size;
+                        const start = d.slice(0, idx).reduce((len, it) => len + it.text.length, 0);
+                        const end = start + el.text.length;
                         return startIndex >= start && endIndex <= end;
                     });
                     // ignore if not found
@@ -25,35 +26,40 @@ export default ({description, annotations}) => (
                     }
 
                     // calculate offset based on previous array items length
-                    const offset = d.slice(0, itemIndex).reduce((len, it) => len + it.size, 0);
+                    const offset = d.slice(0, itemIndex).reduce((len, it) => len + it.text.length, 0);
                     // get text surrounding annotation
                     const startText = d[itemIndex].text.substring(0, startIndex - offset);
                     const endText = d[itemIndex].text.substring(endIndex - offset);
                     // create new array from surrounding and annotation
                     const newD = [{
                         text: startText,
-                        size: startText.length,
                     }, {
                         text: ann.name,
-                        size: ann.name.length,
+                        url: ann.means.replace('dbpedia:', 'http://dbpedia.org/resource/'),
                         highlight: true,
                     }, {
                         text: endText,
-                        size: endText.length,
                     }];
-                    // replace original item with new one
-                    d.splice(itemIndex, 1, ...newD);
                     // return new array
-                    return d;
+                    return [
+                        ...d.slice(0, itemIndex),
+                        ...newD,
+                        ...d.slice(itemIndex + 1, d.length),
+                    ];
                 }, desc),
             // convert to initial array of objects
             [{
                 text: description,
-                size: description.length,
             }])
             // render
             .map((it, i) => (it.highlight ? (
-                <span key={i} className={styles.highlight}>{it.text}</span>
+                <a key={i}
+                    href={it.url}
+                    className={`${styles.highlight} hint--top`}
+                    data-hint={it.url}
+                >
+                    {it.text}
+                </a>
             ) : it.text))}
         </div>
     </div>
