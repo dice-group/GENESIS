@@ -7,6 +7,7 @@ import Location from './location';
 import Images from './images';
 import Videos from './videos';
 import Related from './related';
+import Similar from './similar';
 
 export default function render() {
     return (
@@ -22,7 +23,7 @@ export default function render() {
                         <Related {...this.state} />
                     </div>
                     <div className="col-xs-6">
-                        <Related {...this.state} />
+                        <Similar {...this.state} />
                     </div>
                 </div>
 
