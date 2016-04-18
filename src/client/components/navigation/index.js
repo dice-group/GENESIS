@@ -1,7 +1,6 @@
 import {fromJS} from 'immutable';
-import {browserHistory} from 'react-router';
+import {Link, browserHistory} from 'react-router';
 import React from 'react';
-import {Link} from 'react-router';
 import styles from './navigation.css';
 import {getSuggestions} from '../../stores/search';
 import typeahead$, {getSuggestions as getTypeahead} from '../../stores/typeahead';
@@ -28,6 +27,10 @@ const Navigation = React.createClass({
 
     handleInput(e) {
         e.preventDefault();
+        if (e.key === 'Escape') {
+            this.setState({showTypeahead: false});
+            return;
+        }
         if (e.key === 'Enter') {
             getSuggestions(e);
             this.resetTypeahead();
