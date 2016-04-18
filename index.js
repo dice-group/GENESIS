@@ -12,3 +12,4 @@ require('./src/services/related');
 require('./src/services/typeahead');
 require('./src/services/summary');
 require('./src/services/location');
+require('./src/services/fox');

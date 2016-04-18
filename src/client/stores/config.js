@@ -8,3 +8,4 @@ export const relatedAPI = '/api/related';
 export const typeaheadAPI = '/api/typeahead';
 export const summaryAPI = '/api/summary';
 export const locationAPI = '/api/location';
+export const foxAPI = '/api/fox';

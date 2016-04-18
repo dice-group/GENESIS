@@ -8,6 +8,7 @@ import images$, {getImages} from '../../stores/images';
 import videos$, {getVideos} from '../../stores/videos';
 import similarEntities$, {getSimilarEntities} from '../../stores/similar';
 import relatedEntities$, {getRelatedEntities} from '../../stores/related';
+import fox$, {getAnnotations} from '../../stores/fox';
 
 const Resource = React.createClass({
     getInitialState() {
@@ -27,6 +28,7 @@ const Resource = React.createClass({
             description$
                 .map(v => v.get('description'))
                 .distinctUntilChanged()
+                .do(description => getAnnotations(description))
                 .subscribe(description => this.setState({description})),
             similarEntities$
                 .map(v => v.get('similarEntities'))
@@ -58,6 +60,9 @@ const Resource = React.createClass({
                 .map(v => v.get('videos'))
                 .distinctUntilChanged()
                 .subscribe(videos => this.setState({videos})),
+            fox$
+                .map(v => v.get('annotations'))
+                .subscribe(annotations => this.setState({annotations}))
         ];
     },
     componentDidMount() {
