@@ -1,0 +1,21 @@
+version: '2'
+services:
+  avatar:
+    build: ./3rd-party-services/avatar-service/
+  lucene:
+    build: ./3rd-party-services/search-lucene/
+    volumes_from:
+      - avatar
+  similarity:
+    build: ./3rd-party-services/similarity-service/
+    volumes_from:
+      - avatar
+  ginseng:
+    build: .
+    ports:
+      - 8080:8080
+    environment:
+      - LUCENE_SERVICE=http://lucene:8181/search
+      - AVATAR_SERVICE=http://avatar:8182
+      - SIMILAR_SERVICE=http://similarity:8183/similar
+      - RELATED_SERVICE=http://similarity:8183/related
