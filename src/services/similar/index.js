@@ -7,7 +7,7 @@ import methodOverride from 'method-override';
 import morgan from 'morgan';
 import createLogger from '../../server/logger';
 // config
-import {sparqlEndpoint, defaultGraphUri} from '../../../config';
+import {sparqlEndpoint, defaultGraphUri, similarService} from '../../../config';
 // http requests
 import fetchival from 'fetchival';
 import fetch from 'node-fetch';
@@ -51,7 +51,7 @@ app.post('/', (req, res) => {
     }
 
     logger.debug('getting similarEntities for:', url);
-    fetchival('http://localhost:8183/similar')
+    fetchival(similarService)
     .get({url})
     .then(json => fetchival(sparqlEndpoint)
         .get({

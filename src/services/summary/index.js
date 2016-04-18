@@ -6,6 +6,8 @@ import methodOverride from 'method-override';
 // logging
 import morgan from 'morgan';
 import createLogger from '../../server/logger';
+// config
+import {avatarService} from '../../../config';
 // http requests
 import fetchival from 'fetchival';
 import fetch from 'node-fetch';
@@ -41,7 +43,7 @@ app.post('/', (req, res, next) => {
 
     logger.debug('generating summary for:', url);
 
-    timeout(3000, fetchival('http://localhost:8182', {responseAs: 'text'}).get({url}))
+    timeout(3000, fetchival(avatarService, {responseAs: 'text'}).get({url}))
     .then(summary => res.send({summary}))
     .catch(error => res.status(500).json({error}));
 });

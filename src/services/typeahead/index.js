@@ -6,6 +6,8 @@ import methodOverride from 'method-override';
 // logging
 import morgan from 'morgan';
 import createLogger from '../../server/logger';
+// config
+import {luceneService} from '../../../config';
 // http requests
 import fetchival from 'fetchival';
 import fetch from 'node-fetch';
@@ -40,7 +42,7 @@ app.post('/', (req, res) => {
         return;
     }
 
-    fetchival('http://localhost:8181/search')
+    fetchival(luceneService)
     .get({q})
     .then(json => json.map(it => ({
         url: it.uri,
