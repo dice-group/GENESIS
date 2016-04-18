@@ -30,3 +30,8 @@ Here's how to do that:
     3. Start similarity service with `make similarity`
 2. Start Ginseng by running `make main` (or `npm start`)
 3. Navigate to [http://localhost:8080](http://localhost:8080) in your browser
+
+## License
+
+Dual licensed under GPL-3.0 and commercial license.
+See [LICENSE.md](LICENSE.md) file for more details.
