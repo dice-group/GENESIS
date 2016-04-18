@@ -32,11 +32,8 @@ const Resource = React.createClass({
                 .subscribe(description => this.setState({description})),
             similarEntities$
                 .map(v => v.get('similarEntities'))
-                .distinctUntilChanged()
                 .subscribe(similarEntities => this.setState({similarEntities})),
             relatedEntities$
-                .map(v => v.get('relatedEntities'))
-                .distinctUntilChanged()
                 .subscribe(relatedEntities => this.setState({relatedEntities})),
             summary$
                 .distinctUntilChanged()
