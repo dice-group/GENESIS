@@ -6,6 +6,7 @@ import Summary from './summary';
 import Location from './location';
 import Images from './images';
 import Videos from './videos';
+import Related from './related';
 
 export default function render() {
     return (
@@ -15,6 +16,15 @@ export default function render() {
                 <Description {...this.state} />
                 <Summary {...this.state} />
                 <Location {...this.state} />
+
+            <div className="row">
+                    <div className="col-xs-6">
+                        <Related {...this.state} />
+                    </div>
+                    <div className="col-xs-6">
+                        <Related {...this.state} />
+                    </div>
+                </div>
 
                 <div className="row">
                     <div className="col-xs-6">

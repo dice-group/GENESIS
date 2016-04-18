@@ -6,12 +6,26 @@ import methodOverride from 'method-override';
 // logging
 import morgan from 'morgan';
 import createLogger from '../../server/logger';
-// faker for fake data generation
-// TODO: replace with real data
-import faker from 'faker';
+// config
+import {sparqlEndpoint, defaultGraphUri} from '../../../config';
+// http requests
+import fetchival from 'fetchival';
+import fetch from 'node-fetch';
+fetchival.fetch = fetch;
+// json-rdf parser
+import jsonRdfParser from '../../util/rdf-json-parser';
 
 // logger
 const logger = createLogger('relatedEntities');
+
+const jsonToQuery = (json) => `select distinct ?url ?title ?image where {
+    ?url <http://dbpedia.org/property/title> ?title .
+    OPTIONAL {
+        ?url <http://dbpedia.org/ontology/thumbnail> ?image .
+    }
+    FILTER(langMatches(lang(?title), "EN"))
+    FILTER(?url IN (${json.map(it => `<${it}>`).join(',')}))
+} LIMIT ${json.length * 2}`;
 
 // init app
 const app = express();
@@ -31,16 +45,36 @@ app.use((err, req, res, next) => { // eslint-disable-line
 // serve index page
 app.post('/', (req, res) => {
     const {url} = req.body;
+    if (url.length < 2) {
+        res.send({relatedEntities: []});
+        return;
+    }
+
     logger.debug('getting relatedEntities for:', url);
-    res.send({
-        relatedEntities: [
-            faker.internet.url(),
-            faker.internet.url(),
-            faker.internet.url(),
-            faker.internet.url(),
-            faker.internet.url(),
-        ],
-    });
+    fetchival('http://localhost:8183/related')
+    .get({url})
+    .then(json => fetchival(sparqlEndpoint)
+        .get({
+            'default-graph-uri': defaultGraphUri,
+            query: jsonToQuery(json),
+        })
+        .then(body => jsonRdfParser(body))
+        .then(data => json.map(j => {
+            const ex = data.filter(d => d.url.value === j)[0];
+            if (!ex) {
+                return undefined;
+            }
+            return {
+                url: j,
+                title: ex.title.value,
+                image: ex.image ? ex.image.value : 'http://placehold.it/150x50',
+            };
+        })
+        // filter empty
+        .filter(x => x !== undefined))
+    )
+    .then(relatedEntities => res.send({relatedEntities}))
+    .catch(e => logger.error(e));
 });
 
 // start server
