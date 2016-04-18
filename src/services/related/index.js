@@ -19,7 +19,7 @@ import jsonRdfParser from '../../util/rdf-json-parser';
 const logger = createLogger('relatedEntities');
 
 const jsonToQuery = (json) => `select distinct ?url ?title ?image where {
-    ?url <http://dbpedia.org/property/title> ?title .
+    ?url <http://www.w3.org/2000/01/rdf-schema#label> ?title .
     OPTIONAL {
         ?url <http://dbpedia.org/ontology/thumbnail> ?image .
     }
