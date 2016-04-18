@@ -19,6 +19,11 @@ export default ({description, annotations}) => (
                         const end = start + el.size;
                         return startIndex >= start && endIndex <= end;
                     });
+                    // ignore if not found
+                    if (itemIndex === -1) {
+                        return d;
+                    }
+
                     // calculate offset based on previous array items length
                     const offset = d.slice(0, itemIndex).reduce((len, it) => len + it.size, 0);
                     // get text surrounding annotation
