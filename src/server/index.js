@@ -34,7 +34,7 @@ app.use(express.static(join(__dirname, '..', 'client')));
 app.get('*', (_, res) => res.sendFile(join(__dirname, '..', 'client', 'index.html')));
 
 // catch uncaught errors
-process.on('uncaughtException', (err) => logger.error('Uncaught exception:', err}));
+process.on('uncaughtException', (err) => logger.error('Uncaught exception:', err));
 
 // start server
 const server = app.listen(8080, () => {
