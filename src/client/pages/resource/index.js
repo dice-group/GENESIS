@@ -56,7 +56,6 @@ const Resource = React.createClass({
                 .distinctUntilChanged()
                 .subscribe(videos => this.setState({videos})),
             fox$
-                .map(v => v.get('annotations'))
                 .subscribe(annotations => this.setState({annotations})),
         ];
         // Listen for changes to the current location

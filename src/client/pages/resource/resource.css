@@ -24,3 +24,8 @@
 .highlight:hover {
     color: inherit;
 }
+
+.smallLoader > :global(.three-bounce) > div[class^="bounce"] {
+    max-width: 10px;
+    max-height: 10px;
+}

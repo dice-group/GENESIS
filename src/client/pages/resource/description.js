@@ -7,11 +7,18 @@ export default ({description, annotations}) => (
     <div className="panel panel-default">
         <div className="panel-heading">
             Description
+            <div className={`pull-right hint--top ${styles.smallLoader}`}
+                data-hint="Loading annotations..."
+            >
+                {annotations.get('status') === 'loading' && (
+                    <Spinner spinnerName="three-bounce" />
+                )}
+            </div>
         </div>
         <div className="panel-body">
             {description.get('status') === 'loading' ? (
                 <Spinner spinnerName="cube-grid" noFadeIn />
-            ) : annotations.toJS().reduce((desc, ann) =>
+            ) : annotations.get('annotations').toJS().reduce((desc, ann) =>
                 // reduce annotations to array of text items
                 ann.beginIndex.reduce((d, index) => {
                     // get start and nex index of annotations
