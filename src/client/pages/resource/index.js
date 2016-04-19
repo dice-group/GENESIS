@@ -1,4 +1,5 @@
 import React from 'react';
+import {browserHistory} from 'react-router';
 import render from './render';
 import description$, {getDescription} from '../../stores/description';
 import disambiguation$, {getDisambiguation} from '../../stores/disambiguation';
@@ -60,9 +61,21 @@ const Resource = React.createClass({
                 .map(v => v.get('annotations'))
                 .subscribe(annotations => this.setState({annotations})),
         ];
+        // Listen for changes to the current location
+        this.historyUnlisten = browserHistory.listen(location => {
+            // if navigated to self - trigger data refetch
+            if (location.pathname === '/resource') {
+                this.loadData(location.query);
+            }
+        });
     },
-    componentDidMount() {
-        const {url, title} = this.props.location.state || this.props.location.query;
+
+    componentWillUnmount() {
+        this.subs.map(s => s.dispose());
+        this.historyUnlisten();
+    },
+
+    loadData({url, title}) {
         // store data for latter usage
         this.setState({url, title}); // eslint-disable-line
         // trigger fetching
@@ -73,10 +86,6 @@ const Resource = React.createClass({
         getRelatedEntities(url);
         getDisambiguation(url);
     },
-    componentWillUnmount() {
-        this.subs.map(s => s.dispose());
-    },
-
     loadImages(disambiguation) {
         getImages(`${this.state.title} ${disambiguation.get(0)}`);
     },

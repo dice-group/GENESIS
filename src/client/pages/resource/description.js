@@ -1,4 +1,5 @@
 import React from 'react';
+import {navigateTo} from './navigate';
 import styles from './resource.css';
 
 export default ({description, annotations}) => (
@@ -49,12 +50,13 @@ export default ({description, annotations}) => (
                 }, desc),
             // convert to initial array of objects
             [{
-                text: description,
+                text: description || 'No description available.',
             }])
             // render
             .map((it, i) => (it.highlight ? (
                 <a key={i}
-                    href={it.url}
+                    href="#"
+                    onClick={(e) => navigateTo(e, it.url, it.text)}
                     className={`${styles.highlight} hint--top`}
                     data-hint={it.url}
                 >

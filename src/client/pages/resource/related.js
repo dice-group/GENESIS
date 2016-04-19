@@ -1,5 +1,6 @@
 import React from 'react';
 import Spinner from 'react-spinkit';
+import {navigateTo} from './navigate';
 import styles from './resource.css';
 
 export default ({relatedEntities}) => (
@@ -14,13 +15,15 @@ export default ({relatedEntities}) => (
                 relatedEntities.get('relatedEntities').count() > 0 ?
                 relatedEntities.get('relatedEntities').map(v => (
                     <div className="col-xs-6 text-center" key={v.get('url')}>
-                        <a href={v.get('url')}>
+                        <a href="#" onClick={(e) => navigateTo(e, v.get('url'), v.get('title'))}>
                             <img src={v.get('image')}
                                 className="img-responsive img-rounded"
                                 alt={v.get('title')}
                             />
                         </a>
-                        <a href={v.get('url')}>{v.get('title')}</a>
+                        <a href="#" onClick={(e) => navigateTo(e, v.get('url'), v.get('title'))}>
+                            {v.get('title')}
+                        </a>
                     </div>
                 )) : 'No related entities found.'
             )}

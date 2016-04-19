@@ -7,6 +7,7 @@ export default ({videos}) => (
             Videos
         </div>
         <div className={`panel-body ${styles.mediaPanel}`}>
+            {videos.count() === 0 && 'No videos available'}
             {videos.map(v => (
                 <div className="col-xs-6 text-center" key={v.get('url')}>
                     <a href={`http://youtube.com${v.get('url')}`}>
