@@ -1,21 +1,17 @@
-import {ReplaySubject} from 'rx';
-import defaultState from './defaultstate';
-
-// actions
+// store creator
+import {createStore} from 'rxstate';
+// custom actions
 import get$, {getDisambiguation} from './get';
-import status$ from './status';
+import {status} from './status';
 
-// create result store stream
-const subj = new ReplaySubject(1);
-
-// plug actions
-get$.subscribe(subj);
-status$.subscribe(subj);
-
-// create stream
-const disambiguation$ = subj.startWith(defaultState)
-// combine results
-.scan((state, data) => state.merge(data));
+// create store
+const disambiguation$ = createStore({
+    streams: [get$, status.$],
+    defaultState: {
+        disambiguation: [],
+        status: 'init',
+    },
+});
 
 export {getDisambiguation};
 export default disambiguation$;

@@ -13,10 +13,10 @@ const Map = React.createClass({
     },
 
     componentWillReceiveProps(newProps) {
-        this.setState({loading: false});
+        this.setState({loading: newProps.location.get('loading') !== 'done'});
 
         if (!newProps.location || !newProps.location.get('lat')) {
-            this.setState({position: undefined});
+            this.setState({position: undefined, loading: false});
             return;
         }
 

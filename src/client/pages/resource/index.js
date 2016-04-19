@@ -27,9 +27,9 @@ const Resource = React.createClass({
     componentWillMount() {
         this.subs = [
             description$
-                .map(v => v.get('description'))
+                .filter(description => description.count() > 0)
                 .distinctUntilChanged()
-                .do(description => getAnnotations(description))
+                .do(description => getAnnotations(description.get('description')))
                 .subscribe(description => this.setState({description})),
             similarEntities$
                 .subscribe(similarEntities => this.setState({similarEntities})),
@@ -39,8 +39,6 @@ const Resource = React.createClass({
                 .distinctUntilChanged()
                 .subscribe(summary => this.setState({summary})),
             location$
-                .map(v => v.get('location'))
-                .distinctUntilChanged()
                 .subscribe(location => this.setState({location})),
             disambiguation$
                 .map(v => v.get('disambiguation'))

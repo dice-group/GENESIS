@@ -1,21 +1,17 @@
-import {ReplaySubject} from 'rx';
-import defaultState from './defaultstate';
-
-// actions
+// store creator
+import {createStore} from 'rxstate';
+// custom actions
 import get$, {getRelatedEntities} from './get';
-import status$ from './status';
+import {status} from './status';
 
-// create result store stream
-const subj = new ReplaySubject(1)
-
-// plug in actions
-get$.subscribe(subj);
-status$.subscribe(subj);
-
-// default state
-const relatedEntities$ = subj.startWith(defaultState)
-// combine results
-.scan((state, data) => state.merge(data));
+// create store
+const relatedEntities$ = createStore({
+    streams: [get$, status.$],
+    defaultState: {
+        relatedEntities: [],
+        status: 'init',
+    },
+});
 
 export {getRelatedEntities};
 export default relatedEntities$;

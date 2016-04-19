@@ -1,9 +1,8 @@
 import fetchival from 'fetchival';
 import {Observable} from 'rx';
-import {fromJS} from 'immutable';
 import {createAction} from '../util';
 import {typeaheadAPI} from '../config';
-import {setStatus} from './status';
+import {status} from './status';
 const {fromPromise} = Observable;
 
 const getSuggestions = createAction();
@@ -13,10 +12,10 @@ const stream = getSuggestions.$
     .filter(q => q.length > 3)
     .debounce(300)
     .distinctUntilChanged()
-    .do(() => setStatus('loading'))
+    .do(() => status('loading'))
     .flatMap(q => fromPromise(fetchival(typeaheadAPI).post({q})))
-    .map(results => fromJS({results}))
-    .do(() => setStatus('done'));
+    .map(results => ({results}))
+    .do(() => status('done'));
 
 export {getSuggestions};
 export default stream;

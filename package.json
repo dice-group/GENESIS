@@ -41,7 +41,7 @@
     "g-i-s": "^1.0.3",
     "hint.css": "^2.2.1",
     "http-proxy": "^1.13.2",
-    "immutable": "^3.8.0",
+    "immutable": "^3.8.1",
     "leaflet": "^0.7.7",
     "lodash": "^4.11.1",
     "method-override": "^2.3.5",
@@ -53,6 +53,7 @@
     "react-spinkit": "^1.1.7",
     "request": "^2.72.0",
     "rx": "^4.0.8",
+    "rxstate": "^0.2.0",
     "whatwg-fetch": "^0.11.0",
     "winston": "^2.2.0"
   }

@@ -1,23 +1,19 @@
-import {ReplaySubject} from 'rx';
-import defaultState from './defaultstate';
-
-// actions
+// store creator
+import {createStore} from 'rxstate';
+// custom actions
 import get$, {getAnnotations} from './get';
-import status$ from './status';
-import clear$, {clearFox} from './clear';
+import {status} from './status';
 
-// create result store stream
-const subj = new ReplaySubject(1);
+// create store
+const fox$ = createStore({
+    streams: [get$, status.$],
+    defaultState: {
+        annotations: [],
+        status: 'init',
+    },
+});
 
-// plug actions
-get$.subscribe(subj);
-status$.subscribe(subj);
-clear$.subscribe(subj);
-
-// create stream
-const fox$ = subj.startWith(defaultState)
-// combine results
-.scan((state, data) => state.merge(data));
+const clearFox = fox$.clear;
 
 export {getAnnotations, clearFox};
 export default fox$;

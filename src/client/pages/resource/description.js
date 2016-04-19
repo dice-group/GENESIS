@@ -1,4 +1,5 @@
 import React from 'react';
+import Spinner from 'react-spinkit';
 import {navigateTo} from './navigate';
 import styles from './resource.css';
 
@@ -8,7 +9,9 @@ export default ({description, annotations}) => (
             Description
         </div>
         <div className="panel-body">
-            {annotations.toJS().reduce((desc, ann) =>
+            {description.get('status') === 'loading' ? (
+                <Spinner spinnerName="cube-grid" noFadeIn />
+            ) : annotations.toJS().reduce((desc, ann) =>
                 // reduce annotations to array of text items
                 ann.beginIndex.reduce((d, index) => {
                     // get start and nex index of annotations
@@ -50,7 +53,7 @@ export default ({description, annotations}) => (
                 }, desc),
             // convert to initial array of objects
             [{
-                text: description || 'No description available.',
+                text: description.get('description', 'No description available.'),
             }])
             // render
             .map((it, i) => (it.highlight ? (
