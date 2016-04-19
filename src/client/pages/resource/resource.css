@@ -17,8 +17,8 @@
 }
 
 .highlight {
-    background-color: yellow;
     color: inherit;;
+    text-decoration: underline;
 }
 
 .highlight:hover {
