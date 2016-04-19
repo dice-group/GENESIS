@@ -16,6 +16,7 @@ const Map = React.createClass({
         this.setState({loading: false});
 
         if (!newProps.location || !newProps.location.get('lat')) {
+            this.setState({position: undefined});
             return;
         }
 
