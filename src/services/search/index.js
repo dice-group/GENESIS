@@ -56,9 +56,9 @@ app.post('/', (req, res) => {
     fetchival(luceneService)
     .get({q})
     .then(json => json.map(it => ({
-        url: it.uri,
+        url: it.url,
         title: capitalize(it.label),
-    })))
+    })).slice(0, 30))
     .then(json => fetchival(sparqlEndpoint)
         .get({
             'default-graph-uri': defaultGraphUri,
