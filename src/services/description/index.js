@@ -33,8 +33,11 @@ app.use((err, req, res, next) => { // eslint-disable-line
     res.status(500).send('Something broke!');
 });
 
-const urlToQuery = (url) => `select ?description where {
+const urlToQuery = (url) => `select ?description ?image where {
     <${url}> <http://dbpedia.org/ontology/abstract> ?description .
+    OPTIONAL {
+        <${url}> <http://dbpedia.org/ontology/thumbnail> ?image .
+    }
     FILTER(langMatches(lang(?description), "EN"))
 } LIMIT 1`;
 
@@ -54,7 +57,10 @@ app.post('/', (req, res) => {
         query: urlToQuery(url),
     })
     .then(body => jsonRdfParser(body))
-    .then(body => body.map(it => it.description.value).pop())
+    .then(body => body.map(it => ({
+        description: it.description.value,
+        image: it.image ? it.image.value : undefined,
+    })).pop())
     .then(description => res.send({description}));
 });
 

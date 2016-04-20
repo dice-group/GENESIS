@@ -8,7 +8,7 @@ import {status} from './status';
 const description$ = createStore({
     streams: [get$, status.$],
     defaultState: {
-        description: '',
+        description: {},
         status: 'init',
     },
 });
