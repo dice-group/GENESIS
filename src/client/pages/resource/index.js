@@ -1,4 +1,5 @@
 import React from 'react';
+import {fromJS} from 'immutable';
 import {browserHistory} from 'react-router';
 import render from './render';
 import description$, {getDescription} from '../../stores/description';
@@ -16,7 +17,7 @@ const Resource = React.createClass({
         return {
             url: '',
             title: '',
-            description: '',
+            description: fromJS({}),
             disambiguation: '',
             summary: '',
             images: [],
@@ -29,7 +30,7 @@ const Resource = React.createClass({
             description$
                 .filter(description => description.count() > 0)
                 .distinctUntilChanged()
-                .do(description => getAnnotations(description.get('description')))
+                .do(description => getAnnotations(description.get('description').get('description')))
                 .subscribe(description => this.setState({description})),
             similarEntities$
                 .subscribe(similarEntities => this.setState({similarEntities})),

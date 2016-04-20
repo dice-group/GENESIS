@@ -8,7 +8,7 @@ const {fromPromise} = Observable;
 const getAnnotations = createAction();
 
 const stream = getAnnotations.$
-    .filter(input => input.length > 1)
+    .filter(input => input && input.length > 1)
     .do(() => status('loading'))
     .flatMap(input =>
         fromPromise(fetchival(foxAPI).post({input}))
