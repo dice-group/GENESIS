@@ -33,9 +33,9 @@ app.use((err, req, res, next) => { // eslint-disable-line
 
 // serve index page
 app.post('/', (req, res, next) => {
-    const input = req.body.input;
+    const input = req.body.input || '';
     if (input.length < 2) {
-        res.send([]);
+        res.send({annotations: [], error: 'no input'});
         return;
     }
 
