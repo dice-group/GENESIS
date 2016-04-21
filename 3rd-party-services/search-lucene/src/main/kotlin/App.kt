@@ -59,6 +59,7 @@ fun search(searcher: IndexSearcher, queryString: String, limit: Int = 10): List<
     val hitsPerPage = limit * TIMES_MORE_RESULTS
     var sort = Sort(SortField.FIELD_SCORE, SortedNumericSortField("pagerank_sort", SortField.Type.FLOAT, true))
     val hits = searcher.search(query, hitsPerPage, sort)
+    val uniqueUrls = mutableListOf<String>()
     val res: List<Result> = hits.scoreDocs
         .map { searcher.doc(it.doc) }
         .map {
@@ -67,6 +68,14 @@ fun search(searcher: IndexSearcher, queryString: String, limit: Int = 10): List<
                 label = it.get("label"),
                 pagerank = it.get("pagerank").toDouble()
             )
+        }
+        .filter {
+            if (uniqueUrls.contains(it.url.toLowerCase())) {
+                false
+            } else {
+                uniqueUrls.add(it.url.toLowerCase())
+                true
+            }
         }
         .toList()
     return res
