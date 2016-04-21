@@ -58,7 +58,7 @@ app.post('/', (req, res) => {
     })
     .then(body => jsonRdfParser(body))
     .then(body => body.map(it => ({
-        description: it.description.value,
+        description: it.description.value.replace(/\s\s+/g, ' '),
         image: it.image ? it.image.value : undefined,
     })).pop())
     .then(description => res.send({description}));
