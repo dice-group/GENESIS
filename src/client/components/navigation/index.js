@@ -34,6 +34,7 @@ const Navigation = React.createClass({
         if (e.key === 'Enter') {
             getSuggestions(e);
             this.resetTypeahead();
+            browserHistory.push('/');
             return;
         }
 
