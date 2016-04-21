@@ -9,18 +9,24 @@ import org.apache.lucene.index.IndexableField
 import org.apache.lucene.index.Term
 import org.apache.lucene.search.IndexSearcher
 import org.apache.lucene.search.BooleanQuery
-import org.apache.lucene.search.PrefixQuery
+import org.apache.lucene.search.TermQuery
+import org.apache.lucene.search.PhraseQuery
 import org.apache.lucene.search.BooleanClause
 import org.apache.lucene.search.BooleanClause.Occur
-import org.apache.lucene.search.TopDocs
+import org.apache.lucene.search.Sort
+import org.apache.lucene.search.SortField
+import org.apache.lucene.search.SortedNumericSortField
 import com.google.gson.Gson
 import spark.Spark.get
 import spark.Spark.port
-import kotlin.comparisons.compareBy
 
 val TIMES_MORE_RESULTS = 10
 
-data class Result(val url: String, val label: String, val pagerank: Double)
+data class Result(
+    val url: String,
+    val label: String,
+    val pagerank: Double
+)
 
 fun indexFromFolder(path: String): NIOFSDirectory {
     return NIOFSDirectory(File(path))
@@ -32,36 +38,37 @@ fun readerFromIndex(dir: NIOFSDirectory): DirectoryReader {
 
 fun queryFromString(queryString: String): BooleanQuery {
     val query = BooleanQuery()
+    val phraseQuery = PhraseQuery()
     val words = URLDecoder.decode(queryString, "UTF-8").toLowerCase().split(" ")
     words.map { it.trim() }
     .filter { !it.isEmpty() && it != "*" }
     .forEach{
-        val parse = PrefixQuery(Term("label", it))
+        var term = Term("label", it)
+        phraseQuery.add(term)
+        val parse = TermQuery(term)
+        parse.setBoost(0.9f)
         val clause = BooleanClause(parse, Occur.SHOULD)
         query.add(clause)
     }
+    query.add(BooleanClause(phraseQuery, Occur.SHOULD))
     return query
 }
 
 fun search(searcher: IndexSearcher, queryString: String, limit: Int = 10): List<Result> {
     val query = queryFromString(queryString)
-    val hits: TopDocs = searcher.search(query, limit * TIMES_MORE_RESULTS)
+    val hitsPerPage = limit * TIMES_MORE_RESULTS
+    var sort = Sort(SortField.FIELD_SCORE, SortedNumericSortField("pagerank_sort", SortField.Type.FLOAT, true))
+    val hits = searcher.search(query, hitsPerPage, sort)
     val res: List<Result> = hits.scoreDocs
         .map { searcher.doc(it.doc) }
-        .fold (hashMapOf<String, Document>(), { acc, next ->
-            val url: String = next.get("url")
-            if(!acc.containsKey(url)){
-                acc.put(url, next)
-            }
-            acc
-        })
-        .values
-        .toTypedArray()
         .map {
-            Result(url = it.get("url"), label = it.get("label"), pagerank = it.get("pagerank").toDouble())
+            Result(
+                url = it.get("url"),
+                label = it.get("label"),
+                pagerank = it.get("pagerank").toDouble()
+            )
         }
-        .sortedWith(compareBy({it.pagerank}, {it.label}))
-        .asReversed()
+        .toList()
     return res
 }
 
