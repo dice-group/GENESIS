@@ -53,6 +53,7 @@
     "react-spinkit": "^1.1.7",
     "request": "^2.72.0",
     "rx": "^4.0.8",
+    "rx-dom": "^7.0.3",
     "rxstate": "^0.2.0",
     "whatwg-fetch": "^0.11.0",
     "winston": "^2.2.0"
