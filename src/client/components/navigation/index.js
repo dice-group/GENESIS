@@ -3,7 +3,7 @@ import {Link, browserHistory} from 'react-router';
 import React from 'react';
 import styles from './navigation.css';
 import {getSuggestions} from '../../stores/search';
-import typeahead$, {getSuggestions as getTypeahead} from '../../stores/typeahead';
+import typeahead$, {getSuggestions as getTypeahead, clearSuggestions as clearTypeahead} from '../../stores/typeahead';
 
 const Navigation = React.createClass({
     getInitialState() {
@@ -14,7 +14,7 @@ const Navigation = React.createClass({
     },
 
     componentWillMount() {
-        this.searchSub = typeahead$.subscribe(typeahead => this.setState({typeahead, showTypeahead: true}));
+        this.searchSub = typeahead$.subscribe(typeahead => this.setState({typeahead}));
     },
     componentWillUnmount() {
         this.searchSub.dispose();
@@ -23,12 +23,17 @@ const Navigation = React.createClass({
     resetTypeahead() {
         this.setState({showTypeahead: false});
         this.refs.search.value = '';
+        clearTypeahead();
     },
 
     handleInput(e) {
         e.preventDefault();
         if (e.key === 'Escape') {
             this.setState({showTypeahead: false});
+            return;
+        }
+        if (e.target.value.length === 0) {
+            this.resetTypeahead();
             return;
         }
         if (e.key === 'Enter') {
@@ -38,6 +43,7 @@ const Navigation = React.createClass({
             return;
         }
 
+        this.setState({showTypeahead: true});
         getTypeahead(e);
     },
 

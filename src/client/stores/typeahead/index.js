@@ -13,5 +13,7 @@ const typeahead$ = createStore({
     },
 });
 
-export {getSuggestions};
+const clearSuggestions = typeahead$.clear;
+
+export {getSuggestions, clearSuggestions};
 export default typeahead$;
