@@ -4,6 +4,7 @@ import React from 'react';
 import styles from './navigation.css';
 import {getSuggestions} from '../../stores/search';
 import typeahead$, {getSuggestions as getTypeahead, clearSuggestions as clearTypeahead} from '../../stores/typeahead';
+import clearAll from '../../stores/util/clearAll';
 
 const Navigation = React.createClass({
     getInitialState() {
@@ -50,6 +51,7 @@ const Navigation = React.createClass({
     handleResource(item) {
         const {url, title} = item;
         this.resetTypeahead();
+        clearAll();
         browserHistory.push({
             pathname: '/resource',
             search: `?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`,
