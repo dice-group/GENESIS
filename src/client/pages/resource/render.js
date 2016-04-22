@@ -18,21 +18,21 @@ export default function render() {
                 <Summary {...this.state} />
                 <Location {...this.state} />
 
-            <div className="row">
-                    <div className="col-xs-6">
-                        <Related {...this.state} />
-                    </div>
-                    <div className="col-xs-6">
-                        <Similar {...this.state} />
-                    </div>
-                </div>
-
                 <div className="row">
                     <div className="col-xs-6">
                         <Images {...this.state} />
                     </div>
                     <div className="col-xs-6">
                         <Videos {...this.state} />
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-xs-6">
+                        <Related {...this.state} />
+                    </div>
+                    <div className="col-xs-6">
+                        <Similar {...this.state} />
                     </div>
                 </div>
             </div>
