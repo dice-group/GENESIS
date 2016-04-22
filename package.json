@@ -52,6 +52,7 @@
     "react-portal": "^2.1.0",
     "react-router": "^2.3.0",
     "react-spinkit": "^1.1.7",
+    "react-youtube": "^6.1.0",
     "request": "^2.72.0",
     "rx": "^4.0.8",
     "rx-dom": "^7.0.3",
