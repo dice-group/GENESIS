@@ -1,6 +1,6 @@
 default: build
 
-run: build start
+run: clean build start
 
 build:
 	mvn package

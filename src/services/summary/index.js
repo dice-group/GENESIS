@@ -43,7 +43,7 @@ app.post('/', (req, res, next) => {
 
     logger.debug('generating summary for:', url);
 
-    timeout(3000, fetchival(avatarService, {responseAs: 'text'}).get({url}))
+    timeout(30000, fetchival(avatarService, {responseAs: 'text'}).get({url}))
     .then(summary => res.send({summary}))
     .catch(error => res.status(500).json({error}));
 });
