@@ -49,6 +49,7 @@
     "node-fetch": "^1.5.1",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
+    "react-portal": "^2.1.0",
     "react-router": "^2.3.0",
     "react-spinkit": "^1.1.7",
     "request": "^2.72.0",

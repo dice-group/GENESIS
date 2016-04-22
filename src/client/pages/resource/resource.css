@@ -29,3 +29,20 @@
     max-width: 10px;
     max-height: 10px;
 }
+
+.lightbox {
+    position: fixed;
+    display: flex;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.imageLightbox {
+    max-width: 80%;
+    max-height: 80%;
+}
