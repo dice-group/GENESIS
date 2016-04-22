@@ -7,7 +7,8 @@ export default ({description, annotations}) => (
     <div className="panel panel-default">
         <div className="panel-heading">
             Description
-            <div className={`pull-right hint--top ${styles.smallLoader}`}
+            <div
+                className={`pull-right hint--top ${styles.smallLoader}`}
                 data-hint="Loading annotations..."
             >
                 {annotations.get('status') === 'loading' && (
@@ -66,7 +67,8 @@ export default ({description, annotations}) => (
                 }])
                 // render
                 .map((it, i) => (it.highlight ? (
-                    <a key={i}
+                    <a
+                        key={i}
                         href="#"
                         onClick={(e) => navigateTo(e, it.url, it.text)}
                         className={`${styles.highlight} hint--top`}
@@ -77,13 +79,13 @@ export default ({description, annotations}) => (
                 ) : it.text))}
                 </div>
                 {description.get('description').get('image') && (
-                <div className="col-xs-4">
-                    <img
-                        className="img-responsive"
-                        src={description.get('description').get('image')}
-                        alt={description.get('description').get('image')}
-                    />
-                </div>
+                    <div className="col-xs-4">
+                        <img
+                            className="img-responsive"
+                            src={description.get('description').get('image')}
+                            alt={description.get('description').get('image')}
+                        />
+                    </div>
                 )}
             </div>
         </div>

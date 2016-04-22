@@ -9,14 +9,14 @@ export default ({relatedEntities}) => (
             Related entities
         </div>
         <div className={`panel-body ${styles.mediaPanel}`}>
-            {relatedEntities.get('status') === 'loading' ? (
-                <Spinner spinnerName="cube-grid" noFadeIn />
-            ) : (
+            {relatedEntities.get('status') === 'loading' && <Spinner spinnerName="cube-grid" noFadeIn />}
+            {relatedEntities.get('status') !== 'loading' && (
                 relatedEntities.get('relatedEntities').count() > 0 ?
                 relatedEntities.get('relatedEntities').map(v => (
                     <div className="col-xs-6 text-center" key={v.get('url')}>
                         <a href="#" onClick={(e) => navigateTo(e, v.get('url'), v.get('title'))}>
-                            <img src={v.get('image')}
+                            <img
+                                src={v.get('image')}
                                 className="img-responsive img-rounded"
                                 alt={v.get('title')}
                             />

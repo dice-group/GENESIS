@@ -34,7 +34,7 @@ app.use((err, req, res, next) => { // eslint-disable-line
 });
 
 // serve index page
-app.post('/', (req, res, next) => {
+app.post('/', (req, res) => {
     const url = req.body.url;
     if (url.length < 2) {
         res.send({summary: ''});

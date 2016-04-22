@@ -15,7 +15,7 @@ const renderSearch = function() {
     return this.state.search.get('results').map(it => (
         <div className={`row ${styles.paddedRow}`} key={it.get('url')}>
             <div className="col-xs-2">
-                <img className="img-responsive" src={it.get('image')} />
+                <img className="img-responsive" src={it.get('image')} alt={it.get('image')} />
             </div>
             <div className="col-xs-10">
                 <h4>{it.get('title')}</h4>
