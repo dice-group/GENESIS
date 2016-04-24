@@ -9,7 +9,7 @@ package org.aksw.simba.semanticsim;
  *
  * @author DiegoMoussallem
  */
-public class ValuesTemp {
+public class ValuesTemp implements Comparable<ValuesTemp>{
   private String entity;
   private String entity2;
   private double similarity; // Don't use double type for financial information.
@@ -25,4 +25,10 @@ public class ValuesTemp {
   public double getSimilarity() { return similarity; }
 
   public void setSimilarity(double similarity) { this.similarity = similarity; }
+  
+      @Override
+    public int compareTo(ValuesTemp o) {
+        return new Double(o.getSimilarity()).compareTo(similarity);
+    }
+    
 }
