@@ -27,15 +27,19 @@ const Videos = React.createClass({
                 <div className={`panel-body ${styles.mediaPanel}`}>
                     {videos.count() === 0 && 'No videos available'}
                     {videos.map(v => (
-                        <div className="col-xs-6 text-center" key={v.get('url')}>
-                            <a href="#" onClick={(e) => this.showVideo(e, v.get('url'))}>
-                                <img
-                                    src={v.get('image')}
-                                    className="img-responsive img-rounded"
-                                    alt={v.get('title')}
-                                />
-                            </a>
-                            <a href="#" onClick={(e) => this.showVideo(e, v.get('url'))}>{v.get('title')}</a>
+                        <div className={`row ${styles.marginedRow}`} key={v.get('url')}>
+                            <div className="col-xs-3">
+                                <a href="#" onClick={(e) => this.showVideo(e, v.get('url'))}>
+                                    <img
+                                        src={v.get('image')}
+                                        className="img-responsive img-rounded"
+                                        alt={v.get('title')}
+                                    />
+                                </a>
+                            </div>
+                            <div className="col-xs-9">
+                                <a href="#" onClick={(e) => this.showVideo(e, v.get('url'))}>{v.get('title')}</a>
+                            </div>
                         </div>
                     ))}
                 </div>

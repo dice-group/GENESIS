@@ -51,3 +51,11 @@
     width: 80%;
     height: 80%;
 }
+
+.marginedRow {
+    margin-bottom: 10px;
+}
+
+.relatedImage {
+    max-height: 100px;
+}
