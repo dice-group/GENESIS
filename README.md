@@ -25,7 +25,7 @@ Here's how to do that:
 ### Starting
 
 1. Start all third party services:
-    1. Start Lucene search with `make lucene` (make sure you add your Lucene index into `./3rd-party-services/search-lucene/`, you can get precalculated DBpedia index from [here](https://drive.google.com/open?id=0B4Wn5v0XvEJWcmZpNkFHNDBfcjg))
+    1. Start Lucene search with `make lucene` (make sure you add your Lucene index into `./3rd-party-services/search-lucene/`, you can get precalculated DBpedia index from [here](http://139.18.2.164/termilov/index.zip))
     2. Start AVATAR summarisation with `make avatar`
     3. Start similarity service with `make similarity`
 2. Start Ginseng by running `make main` (or `npm start`)
