@@ -14,8 +14,10 @@ import org.codehaus.jackson.map.ObjectMapper;
  * @author DiegoMoussallem
  */
 public class RelatedResources {
+
     public String GetRelated(String uri) throws IOException {
         Sparql sparql = new Sparql();
+        //Related resources are taken from specific data set which uses PageRank Algorithm
         List<String> resourcesRel = sparql.SparqlRelated(uri);
 
         ObjectMapper mapper = new ObjectMapper();

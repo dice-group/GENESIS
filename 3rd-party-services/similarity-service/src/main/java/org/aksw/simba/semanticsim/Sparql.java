@@ -24,7 +24,7 @@ import org.apache.jena.riot.WebContent;
 public class Sparql {
 
     public List<String> SparqlSimilar(String uri) {
-
+        //First query takes the most specific class from a given resource.
         List<String> resources = new ArrayList<>();
         String ontology_service = "http://dbpedia.org/sparql";
 
@@ -59,7 +59,7 @@ public class Sparql {
             //resources.add(property);
             System.out.println(property);
         }
-
+        //Through the most specific class, here the sparql query takes all resources sharing the same class.
         String endpoint = "DBpedia";
 
         String query
@@ -100,7 +100,7 @@ public class Sparql {
 
     public double SemSim(String uri, String resource) {
 
-        //Query one to get rdfs:label    
+        //Query one to get the similarity based on Jaccard Index.    
         String ontology_service = "http://dbpedia.org/sparql";
         String endpoint = "DBpedia";
         double sim = 0;
@@ -135,7 +135,7 @@ public class Sparql {
     }
 
     public int SparqlCount(String predicate, String object, String resource) {
-        //Query one to get rdfs:label
+        //Query one to get the frequency of each predicate and objecto to put as weight in jaccard.
         String ontology_service = "http://dbpedia.org/sparql";
         String endpoint = "DBpedia";
         List<String> resources = new ArrayList<>();
@@ -197,6 +197,7 @@ public class Sparql {
     }
 
     public List<String> SparqlRelated(String resource) {
+        //Given a resource the sparql query takes all objects from the resource and applies PageRank Algorithm through the existing work.
         List<String> resources = new ArrayList<>();
         String ontology_service = "http://dbpedia.org/sparql";
         String endpoint = "DBpedia";
