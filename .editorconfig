@@ -39,7 +39,7 @@ indent_style = space
 indent_size = 2
 
 # tabs 4 spaces for makefiles
-[Makefile]
+[Makefile*]
 indent_style = tabs
 indent_size = 4
 
