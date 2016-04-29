@@ -1,6 +1,6 @@
 :global(.navbar-collapse).searchHolder {
     display: flex !important;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .searchFlex {

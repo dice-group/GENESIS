@@ -6,6 +6,8 @@ import {getSuggestions} from '../../stores/search';
 import typeahead$, {getSuggestions as getTypeahead, clearSuggestions as clearTypeahead} from '../../stores/typeahead';
 import clearAll from '../../stores/util/clearAll';
 
+import GHIcon from './gh-icon';
+
 const Navigation = React.createClass({
     getInitialState() {
         return {
@@ -92,6 +94,17 @@ const Navigation = React.createClass({
                             </ul>
                         </div>
                     </div>
+                    <ul className="nav navbar-nav navbar-right">
+                        <li>
+                            <a
+                                href="https://github.com/AKSW/Ginseng"
+                                className="hint--left"
+                                data-hint="Grab the source code"
+                            >
+                                <GHIcon />
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </nav>
         );
