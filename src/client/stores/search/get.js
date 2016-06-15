@@ -13,7 +13,9 @@ const stream = getSuggestions.$
     .filter(q => q.length > 1)
     .distinctUntilChanged()
     .do(() => status('loading'))
-    .flatMap(q => fromPromise(fetchival(searchAPI).post({q})))
+    .flatMap(q => fromPromise(fetchival(searchAPI).post({q}))
+        .catch(e => Observable.just({error: e}))
+    )
     .map(results => ({results}))
     .do(() => status('done'));
 

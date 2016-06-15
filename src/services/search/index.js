@@ -14,6 +14,8 @@ import fetch from 'node-fetch';
 fetchival.fetch = fetch;
 // json-rdf parser
 import jsonRdfParser from '../../util/rdf-json-parser';
+// promise timeout
+import timeout from '../../util/timeout';
 // lodash
 import _ from 'lodash/fp';
 const capitalize = _.compose(_.join(' '), _.map(_.capitalize), _.words);
@@ -59,11 +61,11 @@ app.post('/', (req, res) => {
         url: it.url,
         title: capitalize(it.label),
     })).slice(0, 30))
-    .then(json => fetchival(sparqlEndpoint)
+    .then(json => timeout(5000, fetchival(sparqlEndpoint)
         .get({
             'default-graph-uri': defaultGraphUri,
             query: jsonToQuery(json),
-        })
+        }))
         .then(body => jsonRdfParser(body))
         .then(data => json.map(j => {
             const ex = data.filter(d => d.url.value === j.url)[0];
@@ -80,7 +82,7 @@ app.post('/', (req, res) => {
         .filter(x => x !== undefined))
     )
     .then(json => res.send(json))
-    .catch(e => logger.error(e));
+    .catch(error => res.status(500).json({error}));
 });
 
 // start server

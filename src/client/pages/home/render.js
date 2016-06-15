@@ -35,6 +35,15 @@ const chooseRender = function() {
         );
     }
 
+    if (this.state.search.get('results').get('error')) {
+        return (
+            <div className="row">
+                <b>Oops!</b> Looks like DBpedia is having some problems!<br />
+                Please check its status <a href="http://dbpedia.org/sparql">here</a> and try again once its working.
+            </div>
+        );
+    }
+
     return this.state.search.get('results').count() ? renderSearch.call(this) : renderHello();
 };
 
