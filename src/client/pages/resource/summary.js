@@ -16,7 +16,7 @@ export default ({summary}) => {
     return (
         <div className="panel panel-default">
             <div className="panel-heading">
-                Summary
+                Summary (Generated automatically)
             </div>
             <div className="panel-body">
                 {body}
