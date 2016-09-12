@@ -31,22 +31,22 @@ public class SemanticSimilarity {
 
         property = sparql.SparqlMostSpecificClass(uri);
         //gathering all resources which share the same class.
-        //ArrayList<Triple> candidates = searchCandidatesByType(property);
+        ArrayList<Triple> candidates = searchCandidatesByType(property);
         
         //gathering resources which share the same class and which have a high pagerank score.
-        List<String> candidates = sparql.SparqlRelatedClass(property);
+        //List<String> candidates = sparql.SparqlRelatedClass(property);
 
         for (int i = 1; i < candidates.size(); i++) {
             //Now, each retrieved resource is compared to the given resource to measure the semantic similarity between them using Jaccard index using the triple store.
             //result = sparql.SemSim(uri, candidates.get(i));
             
             //Now, each retrieved resource is compared to the given resource to measure the semantic similarity between them using Jaccard index using the own libray.
-            result = similarityTriple(uri, candidates.get(i));
+            result = similarityTriple(uri, candidates.get(i).getSubject());
 
             ValuesTemp temp = new ValuesTemp();
 
             temp.setEntity(uri);
-            temp.setEntity2(candidates.get(i));
+            temp.setEntity2(candidates.get(i).getSubject());
             temp.setSimilarity(result);
             Listtemp.add(temp);
 
