@@ -16,6 +16,7 @@ Here's how to do that:
 
 1. Java and Maven (for 3rd party services)
 2. node.js 4+ and npm 3+ (for Ginseng services and UI)
+3. Download the Dbpedia index from http://139.18.2.164/dmoussallem/indexdbpedia_2015-10.zip for running the similarity service.
 
 ### Installing
 
