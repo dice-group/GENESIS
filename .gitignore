@@ -3,3 +3,4 @@ target
 .idea
 3rd-party-services/search-lucene/index
 cache
+.DS_Store
