@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.aksw.simba.semanticsim.util.Triple;
+import org.aksw.simba.semanticsim.util.TripleIndex;
 
 /**
  *
@@ -24,21 +26,30 @@ public class SemanticSimilarity {
         double result = 0;
         Sparql sparql = new Sparql();
         //Here, resources which belong to the same class are taken.
-        List<String> resourcesSim = sparql.SparqlSimilar(uri);
+
+        String property;
+
+        property = sparql.SparqlMostSpecificClass(uri);
+        //gathering all resources which share the same class.
+        //ArrayList<Triple> candidates = searchCandidatesByType(property);
         
-        for (int i = 1; i < 100; i++) {
-            //Now, each retrieved resource is compared to the given resource to measure the semantic similarity between them using Jaccard index.
-            result = sparql.SemSim(uri, resourcesSim.get(i));
+        //gathering resources which share the same class and which have a high pagerank score.
+        List<String> candidates = sparql.SparqlRelatedClass(property);
+
+        for (int i = 1; i < candidates.size(); i++) {
+            //Now, each retrieved resource is compared to the given resource to measure the semantic similarity between them using Jaccard index using the triple store.
+            //result = sparql.SemSim(uri, candidates.get(i));
+            
+            //Now, each retrieved resource is compared to the given resource to measure the semantic similarity between them using Jaccard index using the own libray.
+            result = similarityTriple(uri, candidates.get(i));
 
             ValuesTemp temp = new ValuesTemp();
 
             temp.setEntity(uri);
-            temp.setEntity2(resourcesSim.get(i));
+            temp.setEntity2(candidates.get(i));
             temp.setSimilarity(result);
-
             Listtemp.add(temp);
 
-            //System.out.println("Done");
         }
         //Organizing and retrieving only top 20 resources.
         Collections.sort(Listtemp);
@@ -47,9 +58,63 @@ public class SemanticSimilarity {
         }
 
         ObjectMapper mapper = new ObjectMapper();
-        
+
         //returining the results in json structure.
         return mapper.writeValueAsString(Results);
+    }
+
+    ArrayList<Triple> searchCandidates(String type) throws IOException {
+
+        TripleIndex index = new TripleIndex();
+        ArrayList<Triple> tmp = new ArrayList<Triple>();
+        tmp.addAll(index.search(null, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", type));
+
+        return tmp;
+
+    }
+
+    ArrayList<Triple> getTriples(String uri) throws IOException {
+
+        TripleIndex index = new TripleIndex();
+        ArrayList<Triple> tmp = new ArrayList<Triple>();
+        tmp.addAll(index.search(uri, null, null));
+        return tmp;
+
+    }
+
+    ArrayList<Triple> searchCandidatesByType(String type) throws IOException {
+
+        TripleIndex index = new TripleIndex();
+        ArrayList<Triple> tmp = new ArrayList<Triple>();
+        tmp.addAll(index.search(null, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", type));
+
+        return tmp;
+
+    }
+
+    public double similarityTriple(String uri, String resource) throws IOException {
+
+        ArrayList<Triple> candidateTriples = new ArrayList<Triple>();
+        ArrayList<Triple> uriTriples = new ArrayList<Triple>();
+        SemanticSimilarity b = new SemanticSimilarity();
+
+        uriTriples = b.getTriples(uri);
+        candidateTriples = b.getTriples(resource);
+        double total, inter = 0;
+        double average = 0;
+
+        total = candidateTriples.size() + uriTriples.size();
+        if (candidateTriples.size() < uriTriples.size()) {
+            for (Triple t2 : candidateTriples) {
+                for (Triple t3 : uriTriples) {
+                    if (t2.getObject().equals(t3.getObject())) {
+                        inter++;
+                    }
+                }
+            }
+        }
+        average = (inter / total);
+        return average;
     }
 
 }

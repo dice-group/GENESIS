@@ -23,6 +23,44 @@ import org.apache.jena.riot.WebContent;
  */
 public class Sparql {
 
+        public String SparqlMostSpecificClass(String uri) {
+        //First query takes the most specific class from a given resource.
+        String ontology_service = "http://dbpedia.org/sparql";
+
+        String endpointsSparql
+                = " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
+                + " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
+                + " PREFIX dbr: <http://dbpedia.org/resource/>"
+                + " PREFIX dbo: <http://dbpedia.org/ontology/>"
+                + " PREFIX owl: <http://www.w3.org/2002/07/owl#>"
+                + "SELECT DISTINCT ?lcs WHERE {"
+                + "?lcs ^rdf:type/rdfs:subClassOf* <" + uri + ">;"
+                + "       a owl:Class ."
+                + "  filter not exists {"
+                + "    ?llcs ^(rdf:type/rdfs:subClassOf*) <" + uri + "> ;"
+                + "          a owl:Class ;"
+                + "          rdfs:subClassOf+ ?lcs ."
+                + "  }"
+                + "FILTER ( !strstarts(str(?lcs), 'http://www.wikidata.org/entity/' ) )}";
+
+        Query sparqlQuery = QueryFactory.create(endpointsSparql, Syntax.syntaxARQ);
+        QueryEngineHTTP qexec = (QueryEngineHTTP) QueryExecutionFactory.sparqlService(ontology_service, sparqlQuery);
+        qexec.setModelContentType(WebContent.contentTypeRDFXML);
+        //Model m = qexec.execSelect();
+        ResultSet results = qexec.execSelect();
+
+//QueryExecution x = QueryExecutionFactory.sparqlService(ontology_service, String.format(endpointsSparql,endpoint));
+//ResultSet results = x.execSelect();
+        String property = null;
+        while (results.hasNext()) {
+            QuerySolution qs = results.next();
+            property = qs.getResource("lcs").toString();
+            //resources.add(property);
+            System.out.println(property);
+        }
+        return property;
+                }
+        
     public List<String> SparqlSimilar(String uri) {
         //First query takes the most specific class from a given resource.
         List<String> resources = new ArrayList<>();
@@ -224,6 +262,40 @@ public class Sparql {
         while (results.hasNext()) {
             QuerySolution qs = results.next();
             object = qs.getResource("obj").toString();
+            resources.add(object);
+        }
+
+        return resources;
+    }
+    
+    public List<String> SparqlRelatedClass(String property) {
+        //Given a resource the sparql query takes all objects from the resource and applies PageRank Algorithm through the existing work.
+        List<String> resources = new ArrayList<>();
+        String ontology_service = "http://dbpedia.org/sparql";
+        String endpoint = "DBpedia";
+
+        String query
+                = "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
+                + "PREFIX dbo:<http://dbpedia.org/ontology/>"
+                + "PREFIX dbr:<http://dbpedia.org/resource/>"
+                + "PREFIX vrank:<http://purl.org/voc/vrank#>"
+                + "SELECT DISTINCT ?s FROM <http://people.aifb.kit.edu/ath/#DBpedia_PageRank> WHERE {"
+                + "?s a <" + property + ">."
+                + "?s vrank:hasRank/vrank:rankValue ?w."
+                + "FILTER( regex(str(?s), '^(?!http://dbpedia.org/resource/Category).+'))"
+                + "FILTER( regex(str(?s), '^(?!http://dbpedia.org/class/yago/).+'))"
+                + "FILTER( regex(str(?s), '^(?!http://www.wikidata.org/entity).+'))}"
+                + "ORDER BY DESC(?w) LIMIT 10000";
+
+        Query sparqlQuery = QueryFactory.create(query, Syntax.syntaxARQ);
+        QueryEngineHTTP qexec = (QueryEngineHTTP) QueryExecutionFactory.sparqlService(ontology_service, sparqlQuery, "http://dbpedia.org");
+
+        ResultSet results = qexec.execSelect();
+
+        String object = null;
+        while (results.hasNext()) {
+            QuerySolution qs = results.next();
+            object = qs.getResource("s").toString();
             resources.add(object);
         }
 
