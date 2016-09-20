@@ -285,7 +285,7 @@ public class Sparql {
                 + "FILTER( regex(str(?s), '^(?!http://dbpedia.org/resource/Category).+'))"
                 + "FILTER( regex(str(?s), '^(?!http://dbpedia.org/class/yago/).+'))"
                 + "FILTER( regex(str(?s), '^(?!http://www.wikidata.org/entity).+'))}"
-                + "ORDER BY DESC(?w) LIMIT 10000";
+                + "ORDER BY DESC(?w) LIMIT 1000";
 
         Query sparqlQuery = QueryFactory.create(query, Syntax.syntaxARQ);
         QueryEngineHTTP qexec = (QueryEngineHTTP) QueryExecutionFactory.sparqlService(ontology_service, sparqlQuery, "http://dbpedia.org");
