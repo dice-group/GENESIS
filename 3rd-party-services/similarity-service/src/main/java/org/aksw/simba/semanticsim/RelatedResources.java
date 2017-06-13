@@ -7,6 +7,7 @@ package org.aksw.simba.semanticsim;
 
 import java.io.IOException;
 import java.util.List;
+
 import org.codehaus.jackson.map.ObjectMapper;
 
 /**
@@ -15,12 +16,13 @@ import org.codehaus.jackson.map.ObjectMapper;
  */
 public class RelatedResources {
 
-    public String GetRelated(String uri) throws IOException {
-        Sparql sparql = new Sparql();
-        //Related resources are taken from specific data set which uses PageRank Algorithm
-        List<String> resourcesRel = sparql.SparqlRelated(uri);
+	public String GetRelated(String uri) throws IOException {
+		Sparql sparql = new Sparql();
+		// Related resources are taken from specific data set which uses
+		// PageRank Algorithm
+		List<String> resourcesRel = sparql.SparqlRelated(uri);
 
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(resourcesRel);
-    }
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(resourcesRel);
+	}
 }
