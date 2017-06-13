@@ -1,8 +1,8 @@
-# GENESIS - Generic Semantic Search Interface
+# GENESIS – A Generic RDF Data Access Interface
 
 ## Start with Docker
 
-The simplest way to get Ginseng running is to use Docker.
+The simplest way to get Genesis running is to use Docker.
 Here's how to do that:
 
 1. Make sure you have latest docker and docker-compose installed.
