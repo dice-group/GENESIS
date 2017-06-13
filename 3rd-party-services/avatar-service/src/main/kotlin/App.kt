@@ -1,5 +1,5 @@
 import java.net.URL
-import org.aksw.avatar.Verbalizer
+import Verbalizer
 import org.dllearner.kb.sparql.SparqlEndpoint
 import org.semanticweb.owlapi.model.IRI
 import uk.ac.manchester.cs.owl.owlapi.OWLNamedIndividualImpl

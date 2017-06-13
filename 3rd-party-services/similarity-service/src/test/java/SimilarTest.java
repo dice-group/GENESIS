@@ -11,7 +11,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
 import org.aksw.simba.semanticsim.SemanticSimilarity;
-import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -19,27 +18,23 @@ import static org.junit.Assert.assertTrue;
  */
 public class SimilarTest {
 
-    public static void main(String args[]) throws IOException {
+	public static void main(String args[]) throws IOException {
 
-        SemanticSimilarity sim = new SemanticSimilarity();
+		SemanticSimilarity sim = new SemanticSimilarity();
 
-        String uri = "http://dbpedia.org/resource/Barack_Obama";
+		String uri = "http://dbpedia.org/resource/Albert_Einstein";
 
-        String json = sim.SemSim1xN(uri);
-        
-        try {
-            FileWriter file = new FileWriter("SimilarResources.json");
-            file.write(json.toString());
-            file.flush();
-            file.close();
+		String json = sim.SemSim1xN(uri);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        
-      //  assertTrue(json.equals(.toString()));
-      
-    }
+		try {
+			FileWriter file = new FileWriter("SimilarResources.json");
+			file.write(json.toString());
+			file.flush();
+			file.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

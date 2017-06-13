@@ -5,7 +5,7 @@ import styles from './home.css';
 const renderHello = () => (
     <div className="row text-center">
         <h3>
-            Welcome to Ginseng!<br />
+            Welcome to Genesis!<br />
             <small>Try searching for something</small>
         </h3>
     </div>
