@@ -10,6 +10,7 @@
  */
 import java.io.FileWriter;
 import java.io.IOException;
+
 import org.aksw.simba.semanticsim.SemanticSimilarity;
 
 /**

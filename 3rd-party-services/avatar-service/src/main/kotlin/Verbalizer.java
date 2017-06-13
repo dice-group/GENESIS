@@ -1,3 +1,4 @@
+
 /*
  * #%L
  * AVATAR
@@ -27,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -40,7 +42,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.aksw.avatar.clustering.BorderFlowX;
-import org.aksw.avatar.clustering.Node;
 import org.aksw.avatar.clustering.WeightedGraph;
 import org.aksw.avatar.clustering.hardening.HardeningFactory;
 import org.aksw.avatar.clustering.hardening.HardeningFactory.HardeningType;
@@ -55,20 +56,16 @@ import org.aksw.avatar.rules.PredicateMergeRule;
 import org.aksw.avatar.rules.SubjectMergeRule;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
+import org.aksw.simba.semanticsim.util.Triple;
 import org.aksw.sparql2nl.naturallanguagegeneration.SimpleNLGwithPostprocessing;
 import org.aksw.triple2nl.gender.DictionaryBasedGenderDetector;
 import org.aksw.triple2nl.gender.Gender;
 import org.aksw.triple2nl.gender.TypeAwareGenderDetector;
-import org.apache.jena.graph.Triple;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
-import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.vocabulary.RDF;
-import org.apache.log4j.Logger;
 import org.dllearner.kb.sparql.SparqlEndpoint;
 import org.dllearner.utilities.MapUtils;
 import org.semanticweb.owlapi.model.IRI;
@@ -78,11 +75,11 @@ import org.semanticweb.owlapi.model.OWLIndividual;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.sun.org.apache.xalan.internal.utils.FeatureManager.Feature;
 
 import joptsimple.OptionException;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
-import simplenlg.features.Feature;
 import simplenlg.features.InternalFeature;
 import simplenlg.features.LexicalFeature;
 import simplenlg.features.NumberAgreement;
@@ -814,4 +811,3 @@ public class Verbalizer {
 		System.out.println(summary);
 	}
 }
-

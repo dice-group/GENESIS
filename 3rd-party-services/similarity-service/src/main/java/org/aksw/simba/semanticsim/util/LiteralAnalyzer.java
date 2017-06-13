@@ -7,7 +7,6 @@ import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.core.LowerCaseTokenizer;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilter;
-import org.apache.lucene.util.Version;
 
 public class LiteralAnalyzer extends Analyzer {
 
@@ -17,7 +16,8 @@ public class LiteralAnalyzer extends Analyzer {
 	 * Creates a new {@link SimpleAnalyzer}
 	 * 
 	 * @param matchVersion
-	 *            Lucene version to match See {@link <a href="#version">above</a>}
+	 *            Lucene version to match See
+	 *            {@link <a href="#version">above</a>}
 	 */
 	public LiteralAnalyzer(Version matchVersion) {
 		this.matchVersion = matchVersion;

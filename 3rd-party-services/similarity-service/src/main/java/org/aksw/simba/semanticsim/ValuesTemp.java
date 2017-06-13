@@ -11,37 +11,38 @@ package org.aksw.simba.semanticsim;
  */
 public class ValuesTemp implements Comparable<ValuesTemp> {
 
-    private String entity;
-    private String entity2;
-    private double similarity; // Don't use double type for financial information.
+	private String entity;
+	private String entity2;
+	private double similarity; // Don't use double type for financial
+								// information.
 
-    public String getEntity() {
-        return entity;
-    }
+	public String getEntity() {
+		return entity;
+	}
 
-    public void setEntity(String entity) {
-        this.entity = entity;
-    }
+	public void setEntity(String entity) {
+		this.entity = entity;
+	}
 
-    public String getEntity2() {
-        return entity2;
-    }
+	public String getEntity2() {
+		return entity2;
+	}
 
-    public void setEntity2(String entity2) {
-        this.entity2 = entity2;
-    }
+	public void setEntity2(String entity2) {
+		this.entity2 = entity2;
+	}
 
-    public double getSimilarity() {
-        return similarity;
-    }
+	public double getSimilarity() {
+		return similarity;
+	}
 
-    public void setSimilarity(double similarity) {
-        this.similarity = similarity;
-    }
+	public void setSimilarity(double similarity) {
+		this.similarity = similarity;
+	}
 
-    @Override
-    public int compareTo(ValuesTemp o) {
-        return new Double(o.getSimilarity()).compareTo(similarity);
-    }
+	@Override
+	public int compareTo(ValuesTemp o) {
+		return new Double(o.getSimilarity()).compareTo(similarity);
+	}
 
 }

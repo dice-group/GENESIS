@@ -37,7 +37,7 @@ app.get('*', (_, res) => res.sendFile(join(__dirname, '..', 'client', 'index.htm
 process.on('uncaughtException', (err) => logger.error('Uncaught exception:', err));
 
 // start server
-const server = app.listen(8079, () => {
+const server = app.listen(8080, () => {
     const host = server.address().address;
     const port = server.address().port;
     logger.info(`Ginseng listening at http://${host}:${port}`);

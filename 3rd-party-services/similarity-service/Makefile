@@ -6,7 +6,7 @@ build:
 	mvn package
 
 start:
-	mvn exec:java -Dexec.args="-Xms20G -Xmx20G"
+	mvn exec:java
 
 clean:
 	mvn clean

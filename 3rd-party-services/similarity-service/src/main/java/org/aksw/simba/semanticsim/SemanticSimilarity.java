@@ -29,24 +29,24 @@ public class SemanticSimilarity {
 		// measure the semantic similarity between them using Jaccard index
 		// using the own libray.
 		try {
-		candidates = sparql.SparqlSimilar(uri);
-		} catch (Exception e){	
+			candidates = sparql.SparqlSimilar(uri);
+		} catch (Exception e) {
 		}
 
-		if(!candidates.isEmpty()){
-		for (int i = 1; i < candidates.size(); i++) {
-			ValuesTemp temp = new ValuesTemp();
-			temp.setEntity(uri);
-			temp.setEntity2(candidates.get(i));
-			temp.setSimilarity(0.8);
-			Listtemp.add(temp);
-		}
-		
-		// Organizing and retrieving only top 20 resources.
-		Collections.sort(Listtemp);
-		for (int i = 0; i < 19; i++) {
-			Results.add(Listtemp.get(i));
-		}
+		if (!candidates.isEmpty()) {
+			for (int i = 1; i < candidates.size(); i++) {
+				ValuesTemp temp = new ValuesTemp();
+				temp.setEntity(uri);
+				temp.setEntity2(candidates.get(i));
+				temp.setSimilarity(0.8);
+				Listtemp.add(temp);
+			}
+
+			// Organizing and retrieving only top 20 resources.
+			Collections.sort(Listtemp);
+			for (int i = 0; i < 19; i++) {
+				Results.add(Listtemp.get(i));
+			}
 		}
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -55,4 +55,3 @@ public class SemanticSimilarity {
 
 	}
 }
-
