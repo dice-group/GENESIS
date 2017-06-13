@@ -2,14 +2,14 @@ package org.aksw.simba.semanticsim.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import javax.management.Query;
-
 import org.apache.commons.validator.routines.UrlValidator;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.QueryParser;
@@ -17,13 +17,16 @@ import org.apache.lucene.queryparser.classic.QueryParserBase;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.MMapDirectory;
+import org.apache.lucene.util.Version;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
 public class TripleIndex {
@@ -46,12 +49,11 @@ public class TripleIndex {
 
 	public TripleIndex() throws IOException {
 		Properties prop = new Properties();
-		// InputStream input =
-		// TripleIndex.class.getResourceAsStream("/config/agdistis.properties");
-		// prop.load(input);
+		//InputStream input = TripleIndex.class.getResourceAsStream("/config/agdistis.properties");
+		//prop.load(input);
 
 		String index = "indexdbpedia_2015-10/en";
-		// log.info("The index will be here: " + index);
+		//log.info("The index will be here: " + index);
 
 		directory = new MMapDirectory(new File(index));
 		ireader = DirectoryReader.open(directory);
@@ -70,8 +72,7 @@ public class TripleIndex {
 		List<Triple> triples = new ArrayList<Triple>();
 		try {
 			if (subject != null && subject.equals("http://aksw.org/notInWiki")) {
-				log.error(
-						"A subject 'http://aksw.org/notInWiki' is searched in the index. That is strange and should not happen");
+				log.error("A subject 'http://aksw.org/notInWiki' is searched in the index. That is strange and should not happen");
 			}
 			if (subject != null) {
 				TermQuery tq = new TermQuery(new Term(FIELD_NAME_SUBJECT, subject));
