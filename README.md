@@ -28,7 +28,7 @@ Here's how to do that:
     1. Start Lucene search with `make lucene` (make sure you add your Lucene index into `./3rd-party-services/search-lucene/`, you can get precalculated DBpedia index from [here](http://139.18.2.164/termilov/index.zip))
     2. Start AVATAR summarisation with `make avatar`
     3. Start similarity service with `make similarity`
-2. Start Ginseng by running `make main` (or `npm start`)
+2. Start GENESIS by running `make main` (or `npm start`)
 3. Navigate to [http://localhost:8080](http://localhost:8080) in your browser
 
 ## License
