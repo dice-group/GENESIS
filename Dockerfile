@@ -4,7 +4,8 @@ WORKDIR /app
 
 # Install top dependencies w/ caching
 COPY package.json /app/package.json
-RUN npm install --silent
+COPY yarn.lock /app/yarn.lock
+RUN yarn
 
 COPY . /app
 
