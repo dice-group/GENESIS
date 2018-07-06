@@ -10,10 +10,10 @@ services:
     build: ./3rd-party-services/similarity-service/
     volumes_from:
       - avatar
-  ginseng:
+  genesis:
     build: .
     ports:
-      - 8080:8080
+      - 8080:3000
     environment:
       - LUCENE_SERVICE=http://lucene:8181/search
       - AVATAR_SERVICE=http://avatar:8182

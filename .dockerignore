@@ -1,4 +1,5 @@
 .git/
+.next/
 node_modules/
 3rd-party-services/
 Makefile

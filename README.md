@@ -8,14 +8,14 @@ Here's how to do that:
 1. Make sure you have latest docker and docker-compose installed.
 2. Clone this repo
 3. Execute `docker-compose up`
-4. Navigate to [http://docker.dev:8080](http://docker.dev:8080) (replace with your docker host) in your browser
+4. Navigate to [http://localhost:8080](http://localhost:8080) (or your docker host) in your browser
 
 ## Development
 
 ### Requirements
 
 1. Java and Maven (for 3rd party services)
-2. node.js 4+ and npm 3+ (for Ginseng services and UI)
+2. node.js 8+ and npm 4+ (for Genesis services and UI)
 
 ### Installing
 
