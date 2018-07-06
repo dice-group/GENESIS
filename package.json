@@ -13,16 +13,12 @@
   "private": true,
   "devDependencies": {},
   "dependencies": {
-    "@zeit/next-css": "^0.2.0",
-    "@zeit/next-less": "^0.3.0",
     "cheerio": "^0.22.0",
-    "faker": "^4.1.0",
     "fastify": "^1.7.0",
     "fastify-http-proxy": "^0.4.1",
     "fetchival": "^0.3.1",
     "g-i-s": "^2.1.2",
     "leaflet": "^1.3.1",
-    "less": "^3.5.2",
     "lodash": "^4.11.1",
     "next": "^6.1.1",
     "node-fetch": "^2.1.2",
@@ -32,7 +28,6 @@
     "react-portal": "^4.1.5",
     "react-youtube": "^7.6.0",
     "request": "^2.72.0",
-    "signale": "^1.2.1",
-    "whatwg-fetch": "^2.0.4"
+    "signale": "^1.2.1"
   }
 }
