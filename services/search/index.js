@@ -5,6 +5,7 @@ const fastify = require('fastify');
 const createLogger = require('../../server/logger');
 const findInDBpedia = require('./dbpedia');
 const findInDataAdminCh = require('./data.admin.ch');
+const findInSessa = require('./sessa');
 
 // logger
 const logger = createLogger('GENESIS-search');
@@ -23,8 +24,9 @@ app.post('/', async (req, res) => {
 
   const resultJsonDbpedia = await findInDBpedia(q);
   const resultJsonAdminCh = await findInDataAdminCh(q);
+  const resultJsonSessa = await findInSessa(q);
 
-  const resultJson = resultJsonAdminCh.concat(resultJsonDbpedia);
+  const resultJson = resultJsonAdminCh.concat(resultJsonSessa).concat(resultJsonDbpedia);
 
   res.send(resultJson);
 });

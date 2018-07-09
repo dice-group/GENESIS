@@ -4,9 +4,8 @@ const fetchival = require('fetchival');
 const fetch = require('node-fetch');
 
 // our packages
-const {sparqlEndpoint, defaultGraphUri, luceneService} = require('../../config');
-const jsonRdfParser = require('../../util/rdf-json-parser');
-const timeout = require('../../util/timeout');
+const {luceneService} = require('../../config');
+const enrichFromDBpedia = require('./dbpedia.enrich');
 
 // setup fetchival
 fetchival.fetch = fetch;
@@ -18,15 +17,6 @@ const capitalize = _.compose(
   _.words
 );
 
-const jsonToQuery = json => `select distinct ?url ?description ?image where {
-    ?url <http://dbpedia.org/ontology/abstract> ?description .
-    OPTIONAL {
-        ?url <http://dbpedia.org/ontology/thumbnail> ?image .
-    }
-    FILTER(langMatches(lang(?description), "EN"))
-    FILTER(?url IN (${json.map(it => `<${it.url}>`).join(',')}))
-} LIMIT ${json.length * 2}`;
-
 module.exports = async q => {
   const origJson = await fetchival(luceneService).get({q});
   const json = origJson
@@ -36,28 +26,6 @@ module.exports = async q => {
     }))
     .slice(0, 30);
 
-  const body = await timeout(
-    5000,
-    fetchival(sparqlEndpoint).get({
-      'default-graph-uri': defaultGraphUri,
-      query: jsonToQuery(json),
-    })
-  );
-  const data = await jsonRdfParser(body);
-  const resultJson = json
-    .map(j => {
-      const ex = data.filter(d => d.url.value === j.url)[0];
-      if (!ex) {
-        return undefined;
-      }
-      return {
-        ...j,
-        description: ex.description.value,
-        image: ex.image ? ex.image.value : 'http://placehold.it/350x150',
-      };
-    })
-    // filter empty
-    .filter(x => x !== undefined);
-
+  const resultJson = await enrichFromDBpedia({json});
   return resultJson;
 };
