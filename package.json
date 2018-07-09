@@ -28,6 +28,7 @@
     "react-portal": "^4.1.5",
     "react-youtube": "^7.6.0",
     "request": "^2.72.0",
+    "request-promise-native": "^1.0.5",
     "signale": "^1.2.1"
   }
 }

@@ -29,7 +29,7 @@ export default view(
 
       const initialText = [
         {
-          text: description.description || 'No description available.',
+          text: (description && description.description) || 'No description available.',
         },
       ];
 
@@ -111,15 +111,16 @@ export default view(
             </div>
             <div className="card-text">
               <div className="row">
-                <div className={description.image ? 'col-sm-8' : 'col-sm-12'}>
+                <div className={description && description.image ? 'col-sm-8' : 'col-sm-12'}>
                   {status === 'loading' && <Spinner spinnerName="cube-grid" noFadeIn />}
                   {this.generateDescription()}
                 </div>
-                {description.image && (
-                  <div className="col-sm-4">
-                    <img className="img-fluid" src={description.image} alt={description.image} />
-                  </div>
-                )}
+                {description &&
+                  description.image && (
+                    <div className="col-sm-4">
+                      <img className="img-fluid" src={description.image} alt={description.image} />
+                    </div>
+                  )}
               </div>
             </div>
           </div>

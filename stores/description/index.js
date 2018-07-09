@@ -22,7 +22,9 @@ export const getDescription = async url => {
     .catch(e => ({error: e}));
   descriptionStore.description = description;
   // annotate
-  getAnnotations(description.description);
+  if (description && description.description) {
+    getAnnotations(description.description);
+  }
   // say we're done
   descriptionStore.status = 'done';
 };
