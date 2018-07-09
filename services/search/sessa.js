@@ -24,8 +24,6 @@ module.exports = async query => {
     url: it.resource.value,
   }));
 
-  console.log(resources);
-
   // fill results data from DBpedia
   const results = await enrichFromDBpedia({json: resources, getTitles: true});
 
