@@ -6,12 +6,18 @@ const createLogger = require('../../server/logger');
 const findInDBpedia = require('./dbpedia');
 const findInDataAdminCh = require('./data.admin.ch');
 const findInSessa = require('./sessa');
+const findInCostFed = require('./costfed');
 
 // logger
 const logger = createLogger('GENESIS-search');
 
 // init app
 const app = fastify();
+
+const handleError = tag => e => {
+  logger.error(`Error processing request to ${tag}`, e);
+  return [];
+};
 
 // serve index page
 app.post('/', async (req, res) => {
@@ -22,11 +28,17 @@ app.post('/', async (req, res) => {
     return;
   }
 
-  const resultJsonDbpedia = await findInDBpedia(q);
-  const resultJsonAdminCh = await findInDataAdminCh(q);
-  const resultJsonSessa = await findInSessa(q);
+  const [resultJsonDbpedia, resultJsonAdminCh, resultJsonSessa, resultJsonCostFed] = await Promise.all([
+    findInDBpedia(q).catch(handleError('dbpedia')),
+    findInDataAdminCh(q).catch(handleError('data.admin.ch')),
+    findInSessa(q).catch(handleError('sessa')),
+    findInCostFed(q).catch(handleError('costfed')),
+  ]);
 
-  const resultJson = resultJsonAdminCh.concat(resultJsonSessa).concat(resultJsonDbpedia);
+  const resultJson = resultJsonAdminCh
+    .concat(resultJsonSessa)
+    .concat(resultJsonDbpedia)
+    .concat(resultJsonCostFed);
 
   res.send(resultJson);
 });
