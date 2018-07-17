@@ -40,6 +40,7 @@ module.exports = async query => {
     label: it.label.value,
     description: '',
     image: 'http://placehold.it/350x150',
+    source: 'CostFed',
   }));
 
   return results;

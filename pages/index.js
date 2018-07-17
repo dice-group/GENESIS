@@ -63,7 +63,9 @@ export default view(() => {
               <img className="img-fluid rounded" src={it.image} alt={it.image} />
             </div>
             <div className="col-sm-10">
-              <h4>{it.title}</h4>
+              <h4>
+                {it.title} <small>(source: {it.source})</small>
+              </h4>
               <p>{it.description}</p>
               <Link
                 href={{

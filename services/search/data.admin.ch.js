@@ -35,5 +35,6 @@ module.exports = async q => {
     url: it.url.value,
     description: 'No description available',
     image: 'http://placehold.it/350x150',
+    source: 'Linked Data Pilot',
   }));
 };

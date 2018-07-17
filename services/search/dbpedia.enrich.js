@@ -22,7 +22,7 @@ const jsonToQuery = ({json, getTitles}) => `select distinct ?url ?description ${
   FILTER(?url IN (${json.map(it => `<${it.url}>`).join(',')}))
 } LIMIT ${json.length * 2}`;
 
-module.exports = async ({json, getTitles}) => {
+module.exports = async ({json, getTitles, source = 'DBpedia'}) => {
   const query = jsonToQuery({json, getTitles});
   const body = await timeout(
     5000,
@@ -40,9 +40,10 @@ module.exports = async ({json, getTitles}) => {
       }
       return {
         ...j,
-        ...(getTitles ? {label: ex.label.value} : {}),
+        ...(getTitles ? {title: ex.label.value} : {}),
         description: ex.description.value,
         image: ex.image ? ex.image.value : 'http://placehold.it/350x150',
+        source,
       };
     })
     // filter empty

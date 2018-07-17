@@ -25,7 +25,7 @@ module.exports = async query => {
   }));
 
   // fill results data from DBpedia
-  const results = await enrichFromDBpedia({json: resources, getTitles: true});
+  const results = await enrichFromDBpedia({json: resources, getTitles: true, source: 'SESSA'});
 
   return results;
 };
