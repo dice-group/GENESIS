@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.aksw.simba.semanticsim;
+package org.aksw.simba.semanticsim.sparql;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +22,9 @@ import com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP;
  *
  * @author DiegoMoussallem
  */
-public class Sparql {
+public class SparqlRetrieval {
     
-    public List<String> SparqlSimilar(String uri) {
+    public List<String> sparqlSimilar(String uri) {
         //First query takes the most specific class from a given resource.
         List<String> resources = new ArrayList<>();
         String ontology_service = "http://dbpedia.org/sparql";
@@ -91,7 +91,7 @@ public class Sparql {
         }
     }
     
-    public List<String> SparqlRelated(String resource) {
+    public List<String> sparqlRelated(String resource) {
         //Given a resource the sparql query takes all objects from the resource and applies PageRank Algorithm through the existing work.
         List<String> resources = new ArrayList<>();
         String ontology_service = "http://dbpedia.org/sparql";

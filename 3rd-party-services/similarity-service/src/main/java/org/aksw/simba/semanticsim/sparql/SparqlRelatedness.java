@@ -3,22 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.aksw.simba.semanticsim;
+package org.aksw.simba.semanticsim.sparql;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.aksw.simba.semanticsim.Relatedness;
 import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  *
  * @author DiegoMoussallem
  */
-public class RelatedResources {
+public class SparqlRelatedness implements Relatedness {
 
-    public String GetRelated(String uri) throws IOException {
-        Sparql sparql = new Sparql();
+    public String getRelated(String uri) throws IOException {
+        SparqlRetrieval sparql = new SparqlRetrieval();
         //Related resources are taken from specific data set which uses PageRank Algorithm
-        List<String> resourcesRel = sparql.SparqlRelated(uri);
+        List<String> resourcesRel = sparql.sparqlRelated(uri);
 
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(resourcesRel);

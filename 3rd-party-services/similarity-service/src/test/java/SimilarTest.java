@@ -10,7 +10,8 @@
  */
 import java.io.FileWriter;
 import java.io.IOException;
-import org.aksw.simba.semanticsim.SemanticSimilarity;
+
+import org.aksw.simba.semanticsim.sparql.SparqlSemanticSimilarity;
 
 /**
  *
@@ -20,11 +21,11 @@ public class SimilarTest {
 
 	public static void main(String args[]) throws IOException {
 
-		SemanticSimilarity sim = new SemanticSimilarity();
+		SparqlSemanticSimilarity sim = new SparqlSemanticSimilarity();
 
 		String uri = "http://dbpedia.org/resource/Albert_Einstein";
 
-		String json = sim.SemSim1xN(uri);
+		String json = sim.getSimilar(uri);
 
 		try {
 			FileWriter file = new FileWriter("SimilarResources.json");
