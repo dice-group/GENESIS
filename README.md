@@ -27,7 +27,7 @@ Here's how to do that:
 1. Start all third party services:
     1. Start Lucene search with `make lucene` (make sure you add your Lucene index into `./3rd-party-services/search-lucene/`, you can get precalculated DBpedia index from [here](http://139.18.2.164/termilov/index.zip))
     2. Start AVATAR summarisation with `make avatar`
-    3. Start similarity service with `make similarity`
+    3. Start similarity service with `make similarity` (make sure you add your KG2Vec model into `./3rd-party-services/similarity-service/model/`, you can get precalculated DBpedia model from [here](http://tsoru.aksw.org/kg2vec/dbpedia_d100_pca20_norm.zip))
 2. Start GENESIS by running `make main` (or `npm start`)
 3. Navigate to [http://localhost:8080](http://localhost:8080) in your browser
 

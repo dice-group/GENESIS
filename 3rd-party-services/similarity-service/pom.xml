@@ -106,13 +106,12 @@
 			<version>3.6.2</version>
 		</dependency>
 		<!-- ~~~~~~~~~~~~~~~~~~~ End Lucene for Indexing ~~~~~~~~~~~~~~~~~~~~~~ -->
-		<!-- ~~~~~~~~~~~~~~~~~~~ Word2Vec for Similarity ~~~~~~~~~~~~~~~~~~~~~~ -->
-		<!-- ~~~~~~~~~~~~~~~~~~~ End Word2Vec for Similarity ~~~~~~~~~~~~~~~~~~~~~~ -->
 		<dependency>
 			<groupId>de.uni_leipzig.simba.limes</groupId>
 			<artifactId>limes-core</artifactId>
 			<version>0.6.3</version>
 		</dependency>
+		<!-- ~~~~~~~~~~~~~~~~~~~ Word2Vec/Lucene for Similarity ~~~~~~~~~~~~~~~~~~~~~~ -->
 		<dependency>
 			<groupId>org.deeplearning4j</groupId>
 			<artifactId>deeplearning4j-nlp</artifactId>
@@ -128,6 +127,8 @@
 			<artifactId>nd4j-jackson</artifactId>
 			<version>0.9.1</version>
 		</dependency>
+
+		<!-- ~~~~~~~~~~~~~~~~~~~ End Word2Vec for Similarity ~~~~~~~~~~~~~~~~~~~~~~ -->
 	</dependencies>
 
 	<build>

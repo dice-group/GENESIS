@@ -11,30 +11,41 @@ import org.aksw.simba.semanticsim.ValuesTemp;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.deeplearning4j.models.embeddings.loader.WordVectorSerializer;
 import org.deeplearning4j.models.embeddings.wordvectors.WordVectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
+ * 
+ * Computes the semantic similarity through cosine between the vectors obtained
+ * from the KG2Vec model of the knowledge graph (in Word2Vec text format).
+ * 
  * @author Tommaso Soru {@literal tsoru@informatik.uni-leipzig.de}
  *
  */
 public class KG2VecSemanticSimilarity implements SemanticSimilarity {
 
+	private static Logger logger = LoggerFactory.getLogger(KG2VecSemanticSimilarity.class);
+
 	@Override
 	public String getSimilar(String uri) throws IOException {
-		
-		WordVectors model = WordVectorSerializer.readWord2VecModel(new File("vectors.txt"));
-		
+
+		String file = "model/dbpedia_d100_pca20_norm.w2v";
+		logger.info("Loading KG2Vec model '" + file + "'...");
+		WordVectors model = WordVectorSerializer.readWord2VecModel(new File(file));
+		logger.info("Loaded.");
+
 		Collection<String> nearest = model.wordsNearest(uri, 10);
-		
+
 		List<ValuesTemp> results = new ArrayList<>();
-		for(String ent : nearest) {
+		for (String ent : nearest) {
 			ValuesTemp val = new ValuesTemp();
 			val.setEntity(uri);
 			val.setEntity2(ent);
 			val.setSimilarity(model.similarity(uri, ent));
 			results.add(val);
 		}
-		
+
 		return new ObjectMapper().writeValueAsString(results);
 	}
-	
+
 }
