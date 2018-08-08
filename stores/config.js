@@ -1,11 +1,17 @@
-export const searchAPI = '/api/search';
-export const descriptionAPI = '/api/description';
-export const disambiguationAPI = '/api/disambiguation';
-export const imagesAPI = '/api/images';
-export const videosAPI = '/api/videos';
-export const similarAPI = '/api/similar';
-export const relatedAPI = '/api/related';
-export const typeaheadAPI = '/api/typeahead';
-export const summaryAPI = '/api/summary';
-export const locationAPI = '/api/location';
-export const foxAPI = '/api/fox';
+import getConfig from 'next/config';
+
+const {
+  publicRuntimeConfig: {baseDomain},
+} = getConfig();
+
+export const searchAPI = `${baseDomain}/api/search`;
+export const descriptionAPI = `${baseDomain}/api/description`;
+export const disambiguationAPI = `${baseDomain}/api/disambiguation`;
+export const imagesAPI = `${baseDomain}/api/images`;
+export const videosAPI = `${baseDomain}/api/videos`;
+export const similarAPI = `${baseDomain}/api/similar`;
+export const relatedAPI = `${baseDomain}/api/related`;
+export const typeaheadAPI = `${baseDomain}/api/typeahead`;
+export const summaryAPI = `${baseDomain}/api/summary`;
+export const locationAPI = `${baseDomain}/api/location`;
+export const foxAPI = `${baseDomain}/api/fox`;

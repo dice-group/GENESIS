@@ -1,5 +1,4 @@
 // npm packages
-const _ = require('lodash/fp');
 const fetchival = require('fetchival');
 const fetch = require('node-fetch');
 
@@ -11,21 +10,23 @@ const timeout = require('../../util/timeout');
 // setup fetchival
 fetchival.fetch = fetch;
 
-const jsonToQuery = ({json, getTitles}) => `select distinct ?url ?description ${getTitles && '?label'} ?image where {
+const jsonToQuery = ({json, getTitles}) => `select distinct ?url ?description ${
+  getTitles ? '?label' : ''
+} ?image where {
   ?url <http://dbpedia.org/ontology/abstract> ?description .
-  ${getTitles && '?url <http://www.w3.org/2000/01/rdf-schema#label> ?label .'}
+  ${getTitles ? '?url <http://www.w3.org/2000/01/rdf-schema#label> ?label .' : ''}
   OPTIONAL {
       ?url <http://dbpedia.org/ontology/thumbnail> ?image .
   }
   FILTER(langMatches(lang(?description), "EN"))
-  ${getTitles && 'FILTER(langMatches(lang(?label), "EN"))'}
+  ${getTitles ? 'FILTER(langMatches(lang(?label), "EN"))' : ''}
   FILTER(?url IN (${json.map(it => `<${it.url}>`).join(',')}))
 } LIMIT ${json.length * 2}`;
 
 module.exports = async ({json, getTitles, source = 'DBpedia'}) => {
   const query = jsonToQuery({json, getTitles});
   const body = await timeout(
-    5000,
+    30000,
     fetchival(sparqlEndpoint).get({
       'default-graph-uri': defaultGraphUri,
       query,
