@@ -26,13 +26,26 @@ public class KG2VecSemanticSimilarity implements SemanticSimilarity {
 
 	private static Logger logger = LoggerFactory.getLogger(KG2VecSemanticSimilarity.class);
 
-	@Override
-	public String getSimilar(String uri) throws IOException {
+	private WordVectors model;
+		
+	public KG2VecSemanticSimilarity() {
+		super();
+		checkModel();
+	}
+	
+	public void checkModel() {
 
+		logger.info("Checking KG2Vec model of similar entities...");
+		
 		String file = "model/dbpedia_d100_pca20_norm.w2v";
 		logger.info("Loading KG2Vec model '" + file + "'...");
-		WordVectors model = WordVectorSerializer.readWord2VecModel(new File(file));
+		model = WordVectorSerializer.readWord2VecModel(new File(file));
 		logger.info("Loaded.");
+		
+	}
+
+	@Override
+	public String getSimilar(String uri) throws IOException {
 
 		Collection<String> nearest = model.wordsNearest(uri, 10);
 
