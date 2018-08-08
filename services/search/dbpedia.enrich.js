@@ -25,7 +25,7 @@ const jsonToQuery = ({json, getTitles}) => `select distinct ?url ?description ${
 module.exports = async ({json, getTitles, source = 'DBpedia'}) => {
   const query = jsonToQuery({json, getTitles});
   const body = await timeout(
-    5000,
+    30000,
     fetchival(sparqlEndpoint).get({
       'default-graph-uri': defaultGraphUri,
       query,
