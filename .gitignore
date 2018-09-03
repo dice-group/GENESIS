@@ -2,6 +2,7 @@ node_modules
 target
 .idea
 3rd-party-services/search-lucene/index
+3rd-party-services/similarity-service/model
 cache
 .DS_Store
 .next
