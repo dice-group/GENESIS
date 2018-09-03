@@ -5,6 +5,7 @@ import {typeaheadAPI} from '../config';
 // create store
 const typeaheadStore = store({
   results: [],
+  value: '',
   status: 'init',
 });
 
@@ -19,6 +20,7 @@ export const getSuggestions = async q => {
 
 export const clearSuggestions = () => {
   typeaheadStore.results = [];
+  typeaheadStore.value = '';
 };
 
 export default typeaheadStore;

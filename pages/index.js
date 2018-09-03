@@ -4,6 +4,28 @@ import {view} from 'react-easy-state';
 import Layout from '../components/Layout';
 import Spinner from '../components/Spinner';
 import searchStore from '../stores/search';
+import typeaheadStore from '../stores/typeahead';
+
+const searchExamples = [
+  'mayor, capital, French Polynesia',
+  'Douglas Hofstadter, award',
+  'Limerick Lake, country',
+  'Suriname, official language',
+  'Australia, largest city',
+  'GIMP, programming language',
+  'Forbes, editor',
+  'capital, Cameroon',
+  'time zone, Rome',
+  'currency, China',
+  'developers, DBpedia',
+  'Yenisei river, flow through, country',
+  'capital, Canada',
+  'Czech republic, currency',
+  'Salt Lake City, time zone',
+  'founder, Penguin Books',
+  'country, located, Mecca',
+];
+const searchExamplesHalf = Math.ceil(searchExamples.length / 2);
 
 const wrap = body => (
   <Layout>
@@ -43,7 +65,8 @@ export default view(() => {
   if (results && results.error) {
     return wrap(
       <div className="row">
-        <b>Oops!</b> Looks like DBpedia is having some problems!<br />
+        <b>Oops!</b> Looks like DBpedia is having some problems!
+        <br />
         Please check its status <a href="http://dbpedia.org/sparql">here</a> and try again once its working.
       </div>
     );
@@ -84,8 +107,40 @@ export default view(() => {
   return wrap(
     <div className="row text-center">
       <h3>
-        Welcome to Genesis!<br />
-        <small>Try searching for something</small>
+        Welcome to Genesis!
+        <br />
+        <small>
+          Try searching for something.
+          <p>Or use one of our examples:</p>
+          <div className="btn-group">
+            {searchExamples.slice(0, searchExamplesHalf).map((query, i) => (
+              <button
+                type="button"
+                className="btn"
+                key={query}
+                href="#"
+                onClick={() => {
+                  typeaheadStore.value = query;
+                }}>
+                Example {i + 1}
+              </button>
+            ))}
+          </div>
+          <div className="btn-group" style={{paddingTop: 10}}>
+            {searchExamples.slice(searchExamplesHalf).map((query, i) => (
+              <button
+                type="button"
+                className="btn"
+                key={query}
+                href="#"
+                onClick={() => {
+                  typeaheadStore.value = query;
+                }}>
+                Example {searchExamplesHalf + i + 1}
+              </button>
+            ))}
+          </div>
+        </small>
       </h3>
     </div>
   );

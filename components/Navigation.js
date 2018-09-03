@@ -14,41 +14,33 @@ export default view(
 
     resetTypeahead() {
       this.setState({showTypeahead: false});
-      this.search.value = '';
       clearTypeahead();
     }
 
     handleInput = e => {
-      e.preventDefault();
+      typeaheadStore.value = e.target.value;
+    };
+
+    handleInputKey = e => {
       if (e.key === 'Escape') {
         this.setState({showTypeahead: false});
         return;
       }
-      if (e.target.value.length === 0) {
+      if (typeaheadStore.value.length === 0) {
         this.resetTypeahead();
         return;
       }
+
       if (e.key === 'Enter') {
-        getSuggestions(e.target.value);
+        getSuggestions(typeaheadStore.value);
         this.resetTypeahead();
         Router.push('/');
         return;
       }
 
       this.setState({showTypeahead: true});
-      getTypeahead(e.target.value);
+      getTypeahead(typeaheadStore.value);
     };
-
-    handleResource(item) {
-      const {url, title} = item;
-      this.resetTypeahead();
-      // clearAll();
-      // browserHistory.push({
-      // pathname: '/resource',
-      // search: `?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`,
-      // state: item,
-      // });
-    }
 
     render() {
       const {showTypeahead} = this.state;
@@ -89,10 +81,9 @@ export default view(
                   type="text"
                   placeholder="Search"
                   className="form-control searchInput"
-                  ref={s => {
-                    this.search = s;
-                  }}
-                  onKeyUp={this.handleInput}
+                  value={typeaheadStore.value}
+                  onChange={this.handleInput}
+                  onKeyUp={this.handleInputKey}
                 />
                 <div
                   className="dropdown-menu typeahead"
