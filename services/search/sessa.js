@@ -10,7 +10,7 @@ const enrichFromDBpedia = require('./dbpedia.enrich');
 module.exports = async query => {
   // get results from SESSA
   const body = await timeout(
-    5000,
+    100000,
     request.post({
       url: sessaEndpoint,
       json: true,

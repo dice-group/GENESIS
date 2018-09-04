@@ -29,7 +29,7 @@ SELECT DISTINCT ?url ?label WHERE {
 module.exports = async query => {
   // get results from SESSA
   const body = await timeout(
-    5000,
+    30000,
     fetchival(costfedEndpoint).get({
       ...params,
       query: generateQuery(query),

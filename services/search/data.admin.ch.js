@@ -19,7 +19,7 @@ module.exports = async q => {
   const query = generateQuery(q);
   // send request
   const body = await timeout(
-    5000,
+    30000,
     request.post({
       url: dataAdminChEndpoint,
       headers: {
