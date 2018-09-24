@@ -20,7 +20,7 @@ const app = fastify();
 // serve index page
 app.post('/', (req, res) => {
   const {url} = req.body;
-  if (url.length < 2) {
+  if (!url || url.length < 2) {
     res.send({summary: ''});
     return;
   }
