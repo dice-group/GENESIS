@@ -12,6 +12,7 @@ SELECT DISTINCT ?url ?label WHERE {
   GRAPH <http://dataset/> {
     ?s nif:anchorOf ?label .
     ?s itsrdf:taIdentRef ?url .
+    FILTER regex(?label, "${q}", "i") .
     FILTER regex(?url, "^http://www.wikidata.org", "i") .
   }
 } LIMIT 10`;
