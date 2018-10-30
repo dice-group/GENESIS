@@ -8,11 +8,11 @@ const timeout = require('../../util/timeout');
 
 const generateQuery = q => `PREFIX nif: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#>
 PREFIX itsrdf: <http://www.w3.org/2005/11/its/rdf#>
-SELECT DISTINCT ?url ?label ?wikidata WHERE {
+SELECT DISTINCT ?url ?label WHERE {
   GRAPH <http://dataset/> {
-    ?url nif:anchorOf ?label .
-    ?url itsrdf:taIdentRef ?wikidata .
-    FILTER regex(?wikidata, "^http://www.wikidata.org", "i") .
+    ?s nif:anchorOf ?label .
+    ?s itsrdf:taIdentRef ?url .
+    FILTER regex(?url, "^http://www.wikidata.org", "i") .
   }
 } LIMIT 10`;
 
@@ -34,9 +34,13 @@ module.exports = async q => {
   const data = await jsonRdfParser(body);
   return data.map(it => ({
     title: it.label.value,
-    url: it.wikidata.url,
+    url: it.url.value,
     description: 'No description available',
     image: 'http://placehold.it/350x150',
     source: 'NIF Export TTL',
   }));
 };
+
+module.exports('Peter Fürst').then(res => {
+  console.log(res);
+});
