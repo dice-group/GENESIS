@@ -7,6 +7,7 @@ const findInDBpedia = require('./dbpedia');
 const findInDataAdminCh = require('./data.admin.ch');
 const findInSessa = require('./sessa');
 const findInCostFed = require('./costfed');
+const findInNifExport = require('./nifexport');
 
 // logger
 const logger = createLogger('GENESIS-search');
@@ -28,17 +29,25 @@ app.post('/', async (req, res) => {
     return;
   }
 
-  const [resultJsonDbpedia, resultJsonAdminCh, resultJsonSessa, resultJsonCostFed] = await Promise.all([
+  const [
+    resultJsonDbpedia,
+    resultJsonAdminCh,
+    resultJsonSessa,
+    resultJsonCostFed,
+    resultJsonNifExport,
+  ] = await Promise.all([
     findInDBpedia(q).catch(handleError('dbpedia')),
     findInDataAdminCh(q).catch(handleError('data.admin.ch')),
     findInSessa(q).catch(handleError('sessa')),
     findInCostFed(q).catch(handleError('costfed')),
+    findInNifExport(q).catch(handleError('nifexport')),
   ]);
 
   const resultJson = resultJsonAdminCh
     .concat(resultJsonSessa)
     .concat(resultJsonDbpedia)
-    .concat(resultJsonCostFed);
+    .concat(resultJsonCostFed)
+    .concat(resultJsonNifExport);
 
   res.send(resultJson);
 });
