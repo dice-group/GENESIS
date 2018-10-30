@@ -6,13 +6,13 @@ const {nifExportEndpoint} = require('../../config');
 const jsonRdfParser = require('../../util/rdf-json-parser');
 const timeout = require('../../util/timeout');
 
-const generateQuery = q => `PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-SELECT DISTINCT ?url ?label WHERE {
+const generateQuery = q => `PREFIX nif: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#>
+PREFIX itsrdf: <http://www.w3.org/2005/11/its/rdf#>
+SELECT DISTINCT ?url ?label ?wikidata WHERE {
   GRAPH <http://dataset/> {
-    ?url rdfs:label ?label .
-    FILTER(langMatches(lang(?label), "EN"))
-    FILTER regex(?label, "${q}", "i") .
+    ?url nif:anchorOf ?label .
+    ?url itsrdf:taIdentRef ?wikidata .
+    FILTER regex(?wikidata, "^http://www.wikidata.org", "i") .
   }
 } LIMIT 10`;
 
@@ -34,7 +34,7 @@ module.exports = async q => {
   const data = await jsonRdfParser(body);
   return data.map(it => ({
     title: it.label.value,
-    url: it.url.value,
+    url: it.wikidata.url,
     description: 'No description available',
     image: 'http://placehold.it/350x150',
     source: 'NIF Export TTL',
